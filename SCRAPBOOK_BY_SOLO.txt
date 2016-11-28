@@ -1,0 +1,56 @@
+VIDEO - VIRTUAL DATA EXTREME OPERATOR -- SCRAP BOOK --by Solo
+
+CONSIDERAÇÕES
+
+** SP - agora começa no fim da memória e é decrementado
+
+** Como agora LOAD, STORE, CALL e RET recebem como argumento
+um registrador contendo um endereço, deve-se carregar
+(utilizando LOADLO e LOADHI) um registrador com o mesmo.
+No montador, isso pode ficar mais fácil utilizando-se labels
+e carregando as LABELS. Assim:
+
+** Montar funções lógicas numa caixinha separada para ocupar
+menos espaço no CHIP ==> feito
+
+** Montar ULA separada para ocupar menos espaço no CHIP ==> ULA criada, ocupa
+menos espaço ==> cabe DIV!
+
+*** Não esquecer de fazer os BRANCHS! ==> feito
+
+*** Criar um JMPZero ==> feito
+
+*** Criar um SHIFT melhor que receba o número de bits
+
+*** ver negócios das flags (BRNE, BRZ, etc..)
+
+LABEL: ADD reg0 reg1
+       LOADLO reg15 LABEL
+       JMP reg15
+
+INSTRUÇÕES - IMPLEMENTADAS E TESTADAS
+
+OK COMP 
+OK JMP
+OK LOADLO
+OK LOADHI
+OK ADD
+OK OUTCHAR
+OK STORE
+OK LOAD
+OK MOV
+OK LOR
+OK LAND
+OK XOR
+-- SHIFT
+  - comentados - falta adaptar ao processo separado
+OK ROT
+OK JMP
+OK BRA
++- CALL
+  - falta setar flags
+  - falta testar CALL aninhado
++- RET
+  - falta testar RET aninhado
++- INCHAR
+  - falta mudar módulo de teclado

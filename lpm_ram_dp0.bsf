@@ -1,0 +1,77 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2004 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 224 136)
+	(text "lpm_ram_dp0" (rect 73 1 165 17)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 120 25 132)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "data[7..0]" (rect 0 0 53 14)(font "Arial" (font_size 8)))
+		(text "data[7..0]" (rect 4 19 49 32)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 120 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "wraddress[6..0]" (rect 0 0 92 14)(font "Arial" (font_size 8)))
+		(text "wraddress[6..0]" (rect 4 35 73 48)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 120 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "wren" (rect 0 0 30 14)(font "Arial" (font_size 8)))
+		(text "wren" (rect 4 51 26 64)(font "Arial" (font_size 8)))
+		(line (pt 0 64)(pt 120 64)(line_width 1))
+	)
+	(port
+		(pt 0 88)
+		(input)
+		(text "rdaddress[6..0]" (rect 0 0 87 14)(font "Arial" (font_size 8)))
+		(text "rdaddress[6..0]" (rect 4 75 72 88)(font "Arial" (font_size 8)))
+		(line (pt 0 88)(pt 120 88)(line_width 3))
+	)
+	(port
+		(pt 224 32)
+		(output)
+		(text "q[7..0]" (rect 0 0 35 14)(font "Arial" (font_size 8)))
+		(text "q[7..0]" (rect 191 19 221 32)(font "Arial" (font_size 8)))
+		(line (pt 224 32)(pt 152 32)(line_width 3))
+	)
+	(drawing
+		(text "8 bits" (rect 124 56 136 79)(font "Arial" )(vertical))
+		(text "128 words" (rect 137 47 149 89)(font "Arial" )(vertical))
+		(line (pt 120 24)(pt 152 24)(line_width 1))
+		(line (pt 152 24)(pt 152 112)(line_width 1))
+		(line (pt 152 112)(pt 120 112)(line_width 1))
+		(line (pt 120 112)(pt 120 24)(line_width 1))
+		(line (pt 134 66)(pt 139 71)(line_width 1))
+		(line (pt 134 70)(pt 139 65)(line_width 1))
+	)
+)

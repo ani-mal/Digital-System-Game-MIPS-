@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="ap7">
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|MUX:inst12|lpm_mux:$00001" CBX_FILE_NAME="mux_tmc.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|dec_kb:inst19|altsyncram:Mux0_rtl_0" CBX_FILE_NAME="altsyncram_lgu.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|lpm_ram_dq2:inst6|altsyncram:altsyncram_component" CBX_FILE_NAME="altsyncram_tqc1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|lpm_rom0:romchar|lpm_rom:lpm_rom_component|altrom:srom|altsyncram:rom_block" CBX_FILE_NAME="altsyncram_m601.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|notepad:pong|lpm_divide:Mod0" CBX_FILE_NAME="lpm_divide_85m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|notepad:pong|lpm_divide:Mod2" CBX_FILE_NAME="lpm_divide_85m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|BUSMUX:inst21|lpm_mux:$00000" CBX_FILE_NAME="mux_smc.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ap7|notepad:pong|lpm_divide:Mod1" CBX_FILE_NAME="lpm_divide_85m.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

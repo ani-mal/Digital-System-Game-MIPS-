@@ -1,0 +1,11 @@
+Flow Status : Successful - Wed May 25 14:58:02 2005
+Quartus II Version : 4.2 Build 178 01/19/2005 SP 1 SJ Full Version
+Revision Name : ap3
+Top-level Entity Name : ap3
+Family : FLEX10K
+Device : EPF10K70RC240-4
+Timing Models : Final
+Met timing requirements : N/A
+Total logic elements : 210 / 3,744 ( 5 % )
+Total pins : 21 / 189 ( 11 % )
+Total memory bits : 0 / 18,432 ( 0 % )

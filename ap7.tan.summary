@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------------
+Timing Analyzer Summary
+--------------------------------------------------------------------------------------
+
+Type           : Worst-case tsu
+Slack          : N/A
+Required Time  : None
+Actual Time    : 6.332 ns
+From           : iSW[17]
+To             : keyboard:inst18|SHIFTIN[8]
+From Clock     : --
+To Clock       : PS2_KBCLK
+Failed Paths   : 0
+
+Type           : Worst-case tco
+Slack          : N/A
+Required Time  : None
+Actual Time    : 12.551 ns
+From           : VGA_SYNC:inst|green_out
+To             : oVGA_G[0]
+From Clock     : iCLK_50
+To Clock       : --
+Failed Paths   : 0
+
+Type           : Worst-case th
+Slack          : N/A
+Required Time  : None
+Actual Time    : 1.767 ns
+From           : iSW[17]
+To             : notepad:pong|video[13]
+From Clock     : --
+To Clock       : iCLK_50
+Failed Paths   : 0
+
+Type           : Clock Setup: 'iCLK_50'
+Slack          : N/A
+Required Time  : None
+Actual Time    : 72.62 MHz ( period = 13.771 ns )
+From           : notepad:pong|SAPOPOS[5]
+To             : notepad:pong|SAPOPOSA[4]
+From Clock     : iCLK_50
+To Clock       : iCLK_50
+Failed Paths   : 0
+
+Type           : Clock Setup: 'PS2_KBCLK'
+Slack          : N/A
+Required Time  : None
+Actual Time    : 384.76 MHz ( period = 2.599 ns )
+From           : keyboard:inst18|INCNT[3]
+To             : keyboard:inst18|SHIFTIN[8]
+From Clock     : PS2_KBCLK
+To Clock       : PS2_KBCLK
+Failed Paths   : 0
+
+Type           : Clock Hold: 'iCLK_50'
+Slack          : Not operational: Clock Skew > Data Delay
+Required Time  : None
+Actual Time    : N/A
+From           : clk_div:inst7|count_1Mhz[2]
+To             : clk_div:inst7|clock_1Mhz_int
+From Clock     : iCLK_50
+To Clock       : iCLK_50
+Failed Paths   : 1
+
+Type           : Total number of failed paths
+Slack          : 
+Required Time  : 
+Actual Time    : 
+From           : 
+To             : 
+From Clock     : 
+To Clock       : 
+Failed Paths   : 1
+
+--------------------------------------------------------------------------------------
+

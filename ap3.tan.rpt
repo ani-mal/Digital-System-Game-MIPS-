@@ -1,0 +1,755 @@
+Timing Analyzer report for ap3
+Wed May 25 14:58:07 2005
+Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Timing Analyzer Summary
+  3. Timing Analyzer Settings
+  4. Clock Settings Summary
+  5. Clock Setup: 'kbd_clk'
+  6. Clock Setup: 'Clock_25Mhz'
+  7. Clock Hold: 'kbd_clk'
+  8. tsu
+  9. tco
+ 10. th
+ 11. Timing Analyzer Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2005 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Timing Analyzer Summary                                                                                                                                                                                                                                 ;
++------------------------------+------------------------------------------+---------------+----------------------------------+-------------------------------+-------------------------------------------------+-------------+-------------+--------------+
+; Type                         ; Slack                                    ; Required Time ; Actual Time                      ; From                          ; To                                              ; From Clock  ; To Clock    ; Failed Paths ;
++------------------------------+------------------------------------------+---------------+----------------------------------+-------------------------------+-------------------------------------------------+-------------+-------------+--------------+
+; Worst-case tsu               ; N/A                                      ; None          ; 5.500 ns                         ; kbd_data                      ; keyboard:inst|ready_set                         ;             ; kbd_clk     ; 0            ;
+; Worst-case tco               ; N/A                                      ; None          ; 100.100 ns                       ; dec_kb:inst11|hex_digit_2[3]  ; LSD_SEG_B                                       ; kbd_clk     ;             ; 0            ;
+; Worst-case th                ; N/A                                      ; None          ; 3.400 ns                         ; kbd_data                      ; keyboard:inst|SHIFTIN[8]                        ;             ; kbd_clk     ; 0            ;
+; Clock Setup: 'Clock_25Mhz'   ; N/A                                      ; None          ; 47.85 MHz ( period = 20.900 ns ) ; clk_div:inst2|clock_100hz_int ; clk_div:inst2|clock_100Hz                       ; Clock_25Mhz ; Clock_25Mhz ; 0            ;
+; Clock Setup: 'kbd_clk'       ; N/A                                      ; None          ; 51.02 MHz ( period = 19.600 ns ) ; keyboard:inst|INCNT[1]        ; keyboard:inst|scan_code[0]                      ; kbd_clk     ; kbd_clk     ; 0            ;
+; Clock Hold: 'kbd_clk'        ; Not operational: Clock Skew > Data Delay ; None          ; N/A                              ; keyboard:inst|scan_code[0]    ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[0] ; kbd_clk     ; kbd_clk     ; 8            ;
+; Total number of failed paths ;                                          ;               ;                                  ;                               ;                                                 ;             ;             ; 8            ;
++------------------------------+------------------------------------------+---------------+----------------------------------+-------------------------------+-------------------------------------------------+-------------+-------------+--------------+
+
+
++------------------------------------------------------------------------------------------------------+
+; Timing Analyzer Settings                                                                             ;
++-------------------------------------------------------+--------------------+------+----+-------------+
+; Option                                                ; Setting            ; From ; To ; Entity Name ;
++-------------------------------------------------------+--------------------+------+----+-------------+
+; Device Name                                           ; EPF10K70RC240-4    ;      ;    ;             ;
+; Timing Models                                         ; Final              ;      ;    ;             ;
+; Maximum Strongly Connected Component loop size        ; 50                 ;      ;    ;             ;
+; Number of source nodes to report per destination node ; 10                 ;      ;    ;             ;
+; Number of destination nodes to report                 ; 10                 ;      ;    ;             ;
+; Number of paths to report                             ; 200                ;      ;    ;             ;
+; Report Minumum Timing Checks                          ; Off                ;      ;    ;             ;
+; Use Fast Timing Models                                ; Off                ;      ;    ;             ;
+; Report IO Paths Separately                            ; Off                ;      ;    ;             ;
+; Clock Analysis Only                                   ; Off                ;      ;    ;             ;
+; Default hold multicycle                               ; Same as Multicycle ;      ;    ;             ;
+; Cut paths between unrelated clock domains             ; On                 ;      ;    ;             ;
+; Cut off read during write signal paths                ; On                 ;      ;    ;             ;
+; Cut off clear and preset signal paths                 ; On                 ;      ;    ;             ;
+; Cut off feedback from I/O pins                        ; On                 ;      ;    ;             ;
+; Ignore Clock Settings                                 ; Off                ;      ;    ;             ;
+; Include external pin delays in fmax calculations      ; Off                ;      ;    ;             ;
+; Analyze latches as synchronous elements               ; Off                ;      ;    ;             ;
+; Do Min/Max analysis using Rise/Fall delays            ; Off                ;      ;    ;             ;
+; Enable Recovery/Removal analysis                      ; Off                ;      ;    ;             ;
+; Use Clock Latency for PLL offset                      ; Off                ;      ;    ;             ;
++-------------------------------------------------------+--------------------+------+----+-------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------+
+; Clock Settings Summary                                                                                                               ;
++-----------------+--------------------+----------+------------------+----------+-----------------------+---------------------+--------+
+; Clock Node Name ; Clock Setting Name ; Type     ; Fmax Requirement ; Based on ; Multiply Base Fmax by ; Divide Base Fmax by ; Offset ;
++-----------------+--------------------+----------+------------------+----------+-----------------------+---------------------+--------+
+; kbd_clk         ;                    ; User Pin ; NONE             ; NONE     ; N/A                   ; N/A                 ; N/A    ;
+; Clock_25Mhz     ;                    ; User Pin ; NONE             ; NONE     ; N/A                   ; N/A                 ; N/A    ;
++-----------------+--------------------+----------+------------------+----------+-----------------------+---------------------+--------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Clock Setup: 'kbd_clk'                                                                                                                                                                                                                              ;
++-------+------------------------------------------------+-------------------------------------------------+------------------------------+------------+----------+-----------------------------+---------------------------+-------------------------+
+; Slack ; Actual fmax (period)                           ; From                                            ; To                           ; From Clock ; To Clock ; Required Setup Relationship ; Required Longest P2P Time ; Actual Longest P2P Time ;
++-------+------------------------------------------------+-------------------------------------------------+------------------------------+------------+----------+-----------------------------+---------------------------+-------------------------+
+; N/A   ; 51.02 MHz ( period = 19.600 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[0]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.300 ns               ;
+; N/A   ; 51.28 MHz ( period = 19.500 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[1]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.300 ns               ;
+; N/A   ; 51.28 MHz ( period = 19.500 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[2]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.300 ns               ;
+; N/A   ; 51.28 MHz ( period = 19.500 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[3]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.300 ns               ;
+; N/A   ; 51.28 MHz ( period = 19.500 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[4]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.300 ns               ;
+; N/A   ; 51.55 MHz ( period = 19.400 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[0]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.200 ns               ;
+; N/A   ; 51.55 MHz ( period = 19.400 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[1]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.200 ns               ;
+; N/A   ; 51.55 MHz ( period = 19.400 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[2]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.200 ns               ;
+; N/A   ; 51.55 MHz ( period = 19.400 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[3]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.200 ns               ;
+; N/A   ; 52.36 MHz ( period = 19.100 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[8]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.100 ns               ;
+; N/A   ; 52.36 MHz ( period = 19.100 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[7]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 15.100 ns               ;
+; N/A   ; 55.87 MHz ( period = 17.900 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|INCNT[3]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.800 ns               ;
+; N/A   ; 57.80 MHz ( period = 17.300 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|INCNT[1]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.300 ns               ;
+; N/A   ; 58.14 MHz ( period = 17.200 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[0]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.14 MHz ( period = 17.200 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[0]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[1]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[1]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[2]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[2]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[3]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[3]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[4]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.48 MHz ( period = 17.100 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[4]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[0]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[0]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[1]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[1]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[2]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[2]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[3]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[3]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.900 ns               ;
+; N/A   ; 58.82 MHz ( period = 17.000 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|ready_set      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 13.000 ns               ;
+; N/A   ; 59.17 MHz ( period = 16.900 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[5]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.17 MHz ( period = 16.900 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[6]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.17 MHz ( period = 16.900 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|SHIFTIN[4]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.17 MHz ( period = 16.900 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[0]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.700 ns               ;
+; N/A   ; 59.17 MHz ( period = 16.900 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[5]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.17 MHz ( period = 16.900 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[6]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.17 MHz ( period = 16.900 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|scan_code[7]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.52 MHz ( period = 16.800 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[1]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.700 ns               ;
+; N/A   ; 59.52 MHz ( period = 16.800 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[2]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.700 ns               ;
+; N/A   ; 59.52 MHz ( period = 16.800 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[3]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.700 ns               ;
+; N/A   ; 59.52 MHz ( period = 16.800 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[4]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.700 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[8]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[8]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[0]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.600 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[1]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.600 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[2]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.600 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[3]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.600 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[7]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 59.88 MHz ( period = 16.700 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[7]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.800 ns               ;
+; N/A   ; 60.98 MHz ( period = 16.400 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[8]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.500 ns               ;
+; N/A   ; 60.98 MHz ( period = 16.400 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[7]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 12.500 ns               ;
+; N/A   ; 64.52 MHz ( period = 15.500 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|INCNT[3]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 11.500 ns               ;
+; N/A   ; 64.52 MHz ( period = 15.500 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|INCNT[3]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 11.500 ns               ;
+; N/A   ; 65.79 MHz ( period = 15.200 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|INCNT[3]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 11.200 ns               ;
+; N/A   ; 66.67 MHz ( period = 15.000 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|INCNT[2]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.900 ns               ;
+; N/A   ; 67.11 MHz ( period = 14.900 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|INCNT[1]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 11.000 ns               ;
+; N/A   ; 67.11 MHz ( period = 14.900 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|INCNT[1]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 11.000 ns               ;
+; N/A   ; 68.49 MHz ( period = 14.600 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|INCNT[3]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.49 MHz ( period = 14.600 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|INCNT[1]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.700 ns               ;
+; N/A   ; 68.49 MHz ( period = 14.600 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|ready_set      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.700 ns               ;
+; N/A   ; 68.49 MHz ( period = 14.600 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|ready_set      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.700 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[5]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[5]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[6]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[6]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|SHIFTIN[4]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|SHIFTIN[4]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[5]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[5]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[6]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[6]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|scan_code[7]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 68.97 MHz ( period = 14.500 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|scan_code[7]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.500 ns               ;
+; N/A   ; 69.44 MHz ( period = 14.400 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|READ_CHAR      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.400 ns               ;
+; N/A   ; 69.93 MHz ( period = 14.300 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|ready_set      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.400 ns               ;
+; N/A   ; 70.42 MHz ( period = 14.200 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[5]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.200 ns               ;
+; N/A   ; 70.42 MHz ( period = 14.200 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[6]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.200 ns               ;
+; N/A   ; 70.42 MHz ( period = 14.200 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|SHIFTIN[4]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.200 ns               ;
+; N/A   ; 70.42 MHz ( period = 14.200 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[5]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.200 ns               ;
+; N/A   ; 70.42 MHz ( period = 14.200 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[6]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.200 ns               ;
+; N/A   ; 70.42 MHz ( period = 14.200 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|scan_code[7]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 10.200 ns               ;
+; N/A   ; 71.94 MHz ( period = 13.900 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[0]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.600 ns                ;
+; N/A   ; 72.46 MHz ( period = 13.800 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[1]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.600 ns                ;
+; N/A   ; 72.46 MHz ( period = 13.800 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[2]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.600 ns                ;
+; N/A   ; 72.46 MHz ( period = 13.800 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[3]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.600 ns                ;
+; N/A   ; 72.46 MHz ( period = 13.800 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[4]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.600 ns                ;
+; N/A   ; 72.99 MHz ( period = 13.700 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[0]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.500 ns                ;
+; N/A   ; 72.99 MHz ( period = 13.700 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[1]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.500 ns                ;
+; N/A   ; 72.99 MHz ( period = 13.700 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[2]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.500 ns                ;
+; N/A   ; 72.99 MHz ( period = 13.700 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[3]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.500 ns                ;
+; N/A   ; 74.63 MHz ( period = 13.400 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[8]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.400 ns                ;
+; N/A   ; 74.63 MHz ( period = 13.400 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[7]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 9.400 ns                ;
+; N/A   ; 79.37 MHz ( period = 12.600 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|INCNT[2]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 8.600 ns                ;
+; N/A   ; 79.37 MHz ( period = 12.600 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|INCNT[2]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 8.600 ns                ;
+; N/A   ; 81.30 MHz ( period = 12.300 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|INCNT[2]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 8.300 ns                ;
+; N/A   ; 82.64 MHz ( period = 12.100 ns )               ; keyboard:inst|INCNT[1]                          ; keyboard:inst|INCNT[0]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 8.000 ns                ;
+; N/A   ; 83.33 MHz ( period = 12.000 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|INCNT[2]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.900 ns                ;
+; N/A   ; 83.33 MHz ( period = 12.000 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|READ_CHAR      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 8.100 ns                ;
+; N/A   ; 83.33 MHz ( period = 12.000 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|READ_CHAR      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 8.100 ns                ;
+; N/A   ; 85.47 MHz ( period = 11.700 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|READ_CHAR      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.800 ns                ;
+; N/A   ; 89.29 MHz ( period = 11.200 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[5]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.100 ns                ;
+; N/A   ; 89.29 MHz ( period = 11.200 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[6]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.100 ns                ;
+; N/A   ; 89.29 MHz ( period = 11.200 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|SHIFTIN[4]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.100 ns                ;
+; N/A   ; 89.29 MHz ( period = 11.200 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[5]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.100 ns                ;
+; N/A   ; 89.29 MHz ( period = 11.200 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[6]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.100 ns                ;
+; N/A   ; 89.29 MHz ( period = 11.200 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|scan_code[7]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 7.100 ns                ;
+; N/A   ; 103.09 MHz ( period = 9.700 ns )               ; keyboard:inst|INCNT[0]                          ; keyboard:inst|INCNT[0]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.700 ns                ;
+; N/A   ; 103.09 MHz ( period = 9.700 ns )               ; keyboard:inst|INCNT[2]                          ; keyboard:inst|INCNT[0]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.700 ns                ;
+; N/A   ; 104.17 MHz ( period = 9.600 ns )               ; dec_kb:inst11|hex_digit_3[0]                    ; dec_kb:inst11|hex_digit_4[0] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.600 ns                ;
+; N/A   ; 104.17 MHz ( period = 9.600 ns )               ; dec_kb:inst11|hex_digit_3[1]                    ; dec_kb:inst11|hex_digit_4[1] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.600 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|INCNT[1]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; keyboard:inst|INCNT[3]                          ; keyboard:inst|INCNT[0]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; keyboard:inst|ready_set                         ; keyboard:inst|ready_set      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|ready_set      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 108.70 MHz ( period = 9.200 ns )               ; dec_kb:inst11|hex_digit_3[4]                    ; dec_kb:inst11|hex_digit_4[4] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.200 ns                ;
+; N/A   ; 109.89 MHz ( period = 9.100 ns )               ; keyboard:inst|READ_CHAR                         ; keyboard:inst|INCNT[0]       ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.000 ns                ;
+; N/A   ; 109.89 MHz ( period = 9.100 ns )               ; dec_kb:inst11|hex_digit_3[2]                    ; dec_kb:inst11|hex_digit_4[2] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.100 ns                ;
+; N/A   ; 109.89 MHz ( period = 9.100 ns )               ; dec_kb:inst11|hex_digit[7]                      ; dec_kb:inst11|hex_digit_2[7] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 5.100 ns                ;
+; N/A   ; 112.36 MHz ( period = 8.900 ns )               ; dec_kb:inst11|hex_digit_2[3]                    ; dec_kb:inst11|hex_digit_3[3] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.900 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; keyboard:inst|SHIFTIN[4]                        ; keyboard:inst|SHIFTIN[3]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.500 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; keyboard:inst|SHIFTIN[7]                        ; keyboard:inst|SHIFTIN[6]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.500 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; keyboard:inst|SHIFTIN[0]                        ; keyboard:inst|scan_code[0]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.500 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; keyboard:inst|SHIFTIN[7]                        ; keyboard:inst|scan_code[7]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.500 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; keyboard:inst|SHIFTIN[4]                        ; keyboard:inst|scan_code[4]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.500 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; dec_kb:inst11|hex_digit_3[5]                    ; dec_kb:inst11|hex_digit_4[5] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.600 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; dec_kb:inst11|hex_digit_2[6]                    ; dec_kb:inst11|hex_digit_3[6] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.600 ns                ;
+; N/A   ; 117.65 MHz ( period = 8.500 ns )               ; dec_kb:inst11|hex_digit_2[4]                    ; dec_kb:inst11|hex_digit_3[4] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 4.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|READ_CHAR                         ; keyboard:inst|READ_CHAR      ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[1]                        ; keyboard:inst|SHIFTIN[0]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[2]                        ; keyboard:inst|SHIFTIN[1]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[3]                        ; keyboard:inst|SHIFTIN[2]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[6]                        ; keyboard:inst|SHIFTIN[5]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[8]                        ; keyboard:inst|SHIFTIN[7]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[5]                        ; keyboard:inst|SHIFTIN[4]     ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[1]                        ; keyboard:inst|scan_code[1]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[2]                        ; keyboard:inst|scan_code[2]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[3]                        ; keyboard:inst|scan_code[3]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[5]                        ; keyboard:inst|scan_code[5]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; keyboard:inst|SHIFTIN[6]                        ; keyboard:inst|scan_code[6]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; inst6                                           ; inst6                        ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; inst4                                           ; inst4                        ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_3[7]                    ; dec_kb:inst11|hex_digit_4[7] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_3[3]                    ; dec_kb:inst11|hex_digit_4[3] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_3[6]                    ; dec_kb:inst11|hex_digit_4[6] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_2[1]                    ; dec_kb:inst11|hex_digit_3[1] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_2[0]                    ; dec_kb:inst11|hex_digit_3[0] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_2[2]                    ; dec_kb:inst11|hex_digit_3[2] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_2[7]                    ; dec_kb:inst11|hex_digit_3[7] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit_2[5]                    ; dec_kb:inst11|hex_digit_3[5] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[0] ; dec_kb:inst11|hex_digit[0]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit[0]                      ; dec_kb:inst11|hex_digit_2[0] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[1] ; dec_kb:inst11|hex_digit[1]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit[1]                      ; dec_kb:inst11|hex_digit_2[1] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[2] ; dec_kb:inst11|hex_digit[2]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit[2]                      ; dec_kb:inst11|hex_digit_2[2] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[3] ; dec_kb:inst11|hex_digit[3]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit[3]                      ; dec_kb:inst11|hex_digit_2[3] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[5] ; dec_kb:inst11|hex_digit[5]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit[5]                      ; dec_kb:inst11|hex_digit_2[5] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[6] ; dec_kb:inst11|hex_digit[6]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit[6]                      ; dec_kb:inst11|hex_digit_2[6] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[7] ; dec_kb:inst11|hex_digit[7]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[4] ; dec_kb:inst11|hex_digit[4]   ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; dec_kb:inst11|hex_digit[4]                      ; dec_kb:inst11|hex_digit_2[4] ; kbd_clk    ; kbd_clk  ; None                        ; None                      ; 2.200 ns                ;
++-------+------------------------------------------------+-------------------------------------------------+------------------------------+------------+----------+-----------------------------+---------------------------+-------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Clock Setup: 'Clock_25Mhz'                                                                                                                                                                                                                                                                                                               ;
++-------+------------------------------------------------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------+-------------+-----------------------------+---------------------------+-------------------------+
+; Slack ; Actual fmax (period)                           ; From                                                                           ; To                                                                             ; From Clock  ; To Clock    ; Required Setup Relationship ; Required Longest P2P Time ; Actual Longest P2P Time ;
++-------+------------------------------------------------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------+-------------+-----------------------------+---------------------------+-------------------------+
+; N/A   ; 47.85 MHz ( period = 20.900 ns )               ; clk_div:inst2|clock_100hz_int                                                  ; clk_div:inst2|clock_100Hz                                                      ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; 87.72 MHz ( period = 11.400 ns )               ; clk_div:inst2|count_10Khz[0]                                                   ; clk_div:inst2|clock_10Khz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 7.300 ns                ;
+; N/A   ; 87.72 MHz ( period = 11.400 ns )               ; clk_div:inst2|count_10Khz[2]                                                   ; clk_div:inst2|clock_10Khz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 7.300 ns                ;
+; N/A   ; 90.09 MHz ( period = 11.100 ns )               ; clk_div:inst2|count_10Khz[1]                                                   ; clk_div:inst2|clock_10Khz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 7.000 ns                ;
+; N/A   ; 103.09 MHz ( period = 9.700 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.700 ns                ;
+; N/A   ; 103.09 MHz ( period = 9.700 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.700 ns                ;
+; N/A   ; 103.09 MHz ( period = 9.700 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.700 ns                ;
+; N/A   ; 103.09 MHz ( period = 9.700 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.700 ns                ;
+; N/A   ; 103.09 MHz ( period = 9.700 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.700 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 106.38 MHz ( period = 9.400 ns )               ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 5.400 ns                ;
+; N/A   ; 112.36 MHz ( period = 8.900 ns )               ; clk_div:inst2|count_100hz[0]                                                   ; clk_div:inst2|clock_100hz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.900 ns                ;
+; N/A   ; 112.36 MHz ( period = 8.900 ns )               ; clk_div:inst2|count_100hz[2]                                                   ; clk_div:inst2|clock_100hz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.900 ns                ;
+; N/A   ; 112.36 MHz ( period = 8.900 ns )               ; clk_div:inst2|count_1Khz[0]                                                    ; clk_div:inst2|clock_1Khz_int                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.900 ns                ;
+; N/A   ; 112.36 MHz ( period = 8.900 ns )               ; clk_div:inst2|count_1Khz[2]                                                    ; clk_div:inst2|clock_1Khz_int                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.900 ns                ;
+; N/A   ; 112.36 MHz ( period = 8.900 ns )               ; clk_div:inst2|count_100Khz[0]                                                  ; clk_div:inst2|clock_100Khz_int                                                 ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.900 ns                ;
+; N/A   ; 112.36 MHz ( period = 8.900 ns )               ; clk_div:inst2|count_100Khz[2]                                                  ; clk_div:inst2|clock_100Khz_int                                                 ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.900 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; clk_div:inst2|count_100hz[1]                                                   ; clk_div:inst2|clock_100hz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.600 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; clk_div:inst2|count_1Khz[1]                                                    ; clk_div:inst2|clock_1Khz_int                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.600 ns                ;
+; N/A   ; 116.28 MHz ( period = 8.600 ns )               ; clk_div:inst2|count_100Khz[1]                                                  ; clk_div:inst2|clock_100Khz_int                                                 ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 4.600 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.900 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.600 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.600 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[1]                                                  ; clk_div:inst2|count_100Khz[2]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[0]                                                  ; clk_div:inst2|count_100Khz[2]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[0]                                                  ; clk_div:inst2|count_100Khz[0]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[2]                                                  ; clk_div:inst2|count_100Khz[0]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[0]                                                  ; clk_div:inst2|count_100Khz[1]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[1]                                                   ; clk_div:inst2|count_10Khz[2]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[0]                                                   ; clk_div:inst2|count_10Khz[2]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[0]                                                   ; clk_div:inst2|count_10Khz[0]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[2]                                                   ; clk_div:inst2|count_10Khz[0]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[0]                                                   ; clk_div:inst2|count_10Khz[1]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[1]                                                    ; clk_div:inst2|count_1Khz[2]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[0]                                                    ; clk_div:inst2|count_1Khz[2]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[0]                                                    ; clk_div:inst2|count_1Khz[0]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[2]                                                    ; clk_div:inst2|count_1Khz[0]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[0]                                                    ; clk_div:inst2|count_1Khz[1]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[1]                                                   ; clk_div:inst2|count_100hz[2]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[0]                                                   ; clk_div:inst2|count_100hz[2]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[0]                                                   ; clk_div:inst2|count_100hz[0]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[2]                                                   ; clk_div:inst2|count_100hz[0]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[0]                                                   ; clk_div:inst2|count_100hz[1]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; clk_div:inst2|clock_1Mhz_int                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; clk_div:inst2|clock_1Mhz_int                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; debounce:inst1|SHIFT_PB[1]                                                     ; debounce:inst1|pb_debounced                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; debounce:inst1|SHIFT_PB[0]                                                     ; debounce:inst1|pb_debounced                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; debounce:inst1|SHIFT_PB[3]                                                     ; debounce:inst1|pb_debounced                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.500 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.300 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.300 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.300 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[2]                                                  ; clk_div:inst2|count_100Khz[2]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[1]                                                  ; clk_div:inst2|count_100Khz[0]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100Khz[1]                                                  ; clk_div:inst2|count_100Khz[1]                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[2]                                                   ; clk_div:inst2|count_10Khz[2]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[1]                                                   ; clk_div:inst2|count_10Khz[0]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_10Khz[1]                                                   ; clk_div:inst2|count_10Khz[1]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[2]                                                    ; clk_div:inst2|count_1Khz[2]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[1]                                                    ; clk_div:inst2|count_1Khz[0]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_1Khz[1]                                                    ; clk_div:inst2|count_1Khz[1]                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[2]                                                   ; clk_div:inst2|count_100hz[2]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[1]                                                   ; clk_div:inst2|count_100hz[0]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|count_100hz[1]                                                   ; clk_div:inst2|count_100hz[1]                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|clock_100hz_int                                                  ; clk_div:inst2|clock_100hz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|clock_1Khz_int                                                   ; clk_div:inst2|clock_1Khz_int                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|clock_10Khz_int                                                  ; clk_div:inst2|clock_10Khz_int                                                  ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|clock_100Khz_int                                                 ; clk_div:inst2|clock_100Khz_int                                                 ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; clk_div:inst2|clock_1Mhz_int                                                   ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; debounce:inst1|SHIFT_PB[1]                                                     ; debounce:inst1|SHIFT_PB[0]                                                     ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; debounce:inst1|SHIFT_PB[2]                                                     ; debounce:inst1|SHIFT_PB[1]                                                     ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; debounce:inst1|SHIFT_PB[3]                                                     ; debounce:inst1|SHIFT_PB[2]                                                     ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; debounce:inst1|SHIFT_PB[2]                                                     ; debounce:inst1|pb_debounced                                                    ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.200 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.000 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.000 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.000 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.000 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.000 ns                ;
+; N/A   ; Restricted to 125.00 MHz ( period = 8.000 ns ) ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2] ; clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3] ; Clock_25Mhz ; Clock_25Mhz ; None                        ; None                      ; 2.000 ns                ;
++-------+------------------------------------------------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------+-------------+-----------------------------+---------------------------+-------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Clock Hold: 'kbd_clk'                                                                                                                                                                                                                ;
++------------------------------------------+----------------------------+-------------------------------------------------+------------+----------+----------------------------+----------------------------+--------------------------+
+; Minimum Slack                            ; From                       ; To                                              ; From Clock ; To Clock ; Required Hold Relationship ; Required Shortest P2P Time ; Actual Shortest P2P Time ;
++------------------------------------------+----------------------------+-------------------------------------------------+------------+----------+----------------------------+----------------------------+--------------------------+
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[0] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[0] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 2.200 ns                 ;
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[1] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[1] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 4.500 ns                 ;
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[2] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[2] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 4.700 ns                 ;
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[7] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[7] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 4.700 ns                 ;
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[4] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[4] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 5.500 ns                 ;
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[5] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[5] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 6.000 ns                 ;
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[3] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[3] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 6.100 ns                 ;
+; Not operational: Clock Skew > Data Delay ; keyboard:inst|scan_code[6] ; lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[6] ; kbd_clk    ; kbd_clk  ; None                       ; None                       ; 6.100 ns                 ;
++------------------------------------------+----------------------------+-------------------------------------------------+------------+----------+----------------------------+----------------------------+--------------------------+
+
+
++-----------------------------------------------------------------------------------------+
+; tsu                                                                                     ;
++-------+--------------+------------+----------+----------------------------+-------------+
+; Slack ; Required tsu ; Actual tsu ; From     ; To                         ; To Clock    ;
++-------+--------------+------------+----------+----------------------------+-------------+
+; N/A   ; None         ; 5.500 ns   ; kbd_data ; keyboard:inst|ready_set    ; kbd_clk     ;
+; N/A   ; None         ; 5.400 ns   ; PB[1]    ; debounce:inst1|SHIFT_PB[3] ; Clock_25Mhz ;
+; N/A   ; None         ; 2.600 ns   ; kbd_data ; keyboard:inst|READ_CHAR    ; kbd_clk     ;
+; N/A   ; None         ; 2.300 ns   ; kbd_data ; keyboard:inst|SHIFTIN[8]   ; kbd_clk     ;
++-------+--------------+------------+----------+----------------------------+-------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; tco                                                                                                                                                                ;
++-----------------------------------------+-----------------------------------------------------+------------+------------------------------+-----------+------------+
+; Slack                                   ; Required tco                                        ; Actual tco ; From                         ; To        ; From Clock ;
++-----------------------------------------+-----------------------------------------------------+------------+------------------------------+-----------+------------+
+; N/A                                     ; None                                                ; 100.100 ns ; dec_kb:inst11|hex_digit_2[3] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 100.000 ns ; dec_kb:inst11|hex_digit_2[6] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 99.900 ns  ; dec_kb:inst11|hex_digit_2[3] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 99.800 ns  ; dec_kb:inst11|hex_digit_2[5] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 99.800 ns  ; dec_kb:inst11|hex_digit_2[6] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 99.600 ns  ; dec_kb:inst11|hex_digit_2[5] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.600 ns  ; dec_kb:inst11|hex_digit[7]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.400 ns  ; dec_kb:inst11|hex_digit_2[3] ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.400 ns  ; dec_kb:inst11|hex_digit_2[3] ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.400 ns  ; dec_kb:inst11|hex_digit_2[3] ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.400 ns  ; dec_kb:inst11|hex_digit_2[3] ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.400 ns  ; dec_kb:inst11|hex_digit[7]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.300 ns  ; dec_kb:inst11|hex_digit_2[6] ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.300 ns  ; dec_kb:inst11|hex_digit_2[6] ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.300 ns  ; dec_kb:inst11|hex_digit_2[6] ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.300 ns  ; dec_kb:inst11|hex_digit_2[6] ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.100 ns  ; dec_kb:inst11|hex_digit_2[5] ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.100 ns  ; dec_kb:inst11|hex_digit_2[5] ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.100 ns  ; dec_kb:inst11|hex_digit_2[5] ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 98.100 ns  ; dec_kb:inst11|hex_digit_2[5] ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.600 ns  ; dec_kb:inst11|hex_digit[5]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.600 ns  ; dec_kb:inst11|hex_digit[3]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.500 ns  ; dec_kb:inst11|hex_digit_2[3] ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.500 ns  ; dec_kb:inst11|hex_digit_2[3] ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.400 ns  ; dec_kb:inst11|hex_digit_2[6] ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.400 ns  ; dec_kb:inst11|hex_digit_2[6] ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.400 ns  ; dec_kb:inst11|hex_digit[5]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.400 ns  ; dec_kb:inst11|hex_digit[3]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.200 ns  ; dec_kb:inst11|hex_digit_2[5] ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.200 ns  ; dec_kb:inst11|hex_digit_2[5] ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.100 ns  ; dec_kb:inst11|hex_digit_2[3] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.100 ns  ; dec_kb:inst11|hex_digit_2[7] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 97.000 ns  ; dec_kb:inst11|hex_digit_2[6] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.900 ns  ; dec_kb:inst11|hex_digit[7]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.900 ns  ; dec_kb:inst11|hex_digit[7]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.900 ns  ; dec_kb:inst11|hex_digit[7]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.900 ns  ; dec_kb:inst11|hex_digit[7]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.900 ns  ; dec_kb:inst11|hex_digit_2[7] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.800 ns  ; dec_kb:inst11|hex_digit_2[5] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.400 ns  ; dec_kb:inst11|hex_digit[0]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.200 ns  ; dec_kb:inst11|hex_digit[0]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.100 ns  ; dec_kb:inst11|hex_digit[7]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.100 ns  ; dec_kb:inst11|hex_digit[1]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.000 ns  ; dec_kb:inst11|hex_digit_2[3] ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 96.000 ns  ; dec_kb:inst11|hex_digit_2[3] ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit_2[6] ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit_2[6] ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[5]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[3]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[5]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[3]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[5]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[3]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[5]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[3]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.900 ns  ; dec_kb:inst11|hex_digit[1]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.700 ns  ; dec_kb:inst11|hex_digit_2[5] ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.700 ns  ; dec_kb:inst11|hex_digit_2[5] ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.700 ns  ; dec_kb:inst11|hex_digit[2]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.500 ns  ; dec_kb:inst11|hex_digit[2]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.400 ns  ; dec_kb:inst11|hex_digit_2[7] ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.400 ns  ; dec_kb:inst11|hex_digit_2[7] ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.400 ns  ; dec_kb:inst11|hex_digit_2[7] ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.400 ns  ; dec_kb:inst11|hex_digit_2[7] ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.300 ns  ; dec_kb:inst11|hex_digit[6]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.100 ns  ; dec_kb:inst11|hex_digit[5]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.100 ns  ; dec_kb:inst11|hex_digit[3]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 95.100 ns  ; dec_kb:inst11|hex_digit[6]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.700 ns  ; dec_kb:inst11|hex_digit[0]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.700 ns  ; dec_kb:inst11|hex_digit[0]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.700 ns  ; dec_kb:inst11|hex_digit[0]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.700 ns  ; dec_kb:inst11|hex_digit[0]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.500 ns  ; dec_kb:inst11|hex_digit_2[7] ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.500 ns  ; dec_kb:inst11|hex_digit_2[7] ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.400 ns  ; dec_kb:inst11|hex_digit[1]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.400 ns  ; dec_kb:inst11|hex_digit[1]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.400 ns  ; dec_kb:inst11|hex_digit[1]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.400 ns  ; dec_kb:inst11|hex_digit[1]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.200 ns  ; dec_kb:inst11|hex_digit[7]   ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.200 ns  ; dec_kb:inst11|hex_digit[7]   ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.200 ns  ; dec_kb:inst11|hex_digit[7]   ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.200 ns  ; dec_kb:inst11|hex_digit[7]   ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.100 ns  ; dec_kb:inst11|hex_digit_2[7] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.000 ns  ; dec_kb:inst11|hex_digit[2]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.000 ns  ; dec_kb:inst11|hex_digit[2]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.000 ns  ; dec_kb:inst11|hex_digit[2]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 94.000 ns  ; dec_kb:inst11|hex_digit[2]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.900 ns  ; dec_kb:inst11|hex_digit[0]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.700 ns  ; dec_kb:inst11|hex_digit_2[2] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.600 ns  ; dec_kb:inst11|hex_digit[1]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.600 ns  ; dec_kb:inst11|hex_digit[6]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.600 ns  ; dec_kb:inst11|hex_digit[6]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.600 ns  ; dec_kb:inst11|hex_digit[6]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.600 ns  ; dec_kb:inst11|hex_digit[6]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.500 ns  ; dec_kb:inst11|hex_digit_2[1] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.500 ns  ; dec_kb:inst11|hex_digit_2[2] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.300 ns  ; dec_kb:inst11|hex_digit_2[1] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[5]   ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[3]   ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[5]   ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[3]   ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[5]   ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[3]   ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[5]   ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[3]   ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.200 ns  ; dec_kb:inst11|hex_digit[2]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.000 ns  ; dec_kb:inst11|hex_digit_2[7] ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 93.000 ns  ; dec_kb:inst11|hex_digit_2[7] ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.800 ns  ; dec_kb:inst11|hex_digit[6]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit[0]   ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit[0]   ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit[0]   ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit[0]   ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit_2[2] ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit_2[2] ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit_2[2] ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 92.000 ns  ; dec_kb:inst11|hex_digit_2[2] ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.800 ns  ; dec_kb:inst11|hex_digit_2[1] ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.800 ns  ; dec_kb:inst11|hex_digit_2[1] ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.800 ns  ; dec_kb:inst11|hex_digit_2[1] ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.800 ns  ; dec_kb:inst11|hex_digit_2[1] ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.700 ns  ; dec_kb:inst11|hex_digit[1]   ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.700 ns  ; dec_kb:inst11|hex_digit[1]   ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.700 ns  ; dec_kb:inst11|hex_digit[1]   ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.700 ns  ; dec_kb:inst11|hex_digit[1]   ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.400 ns  ; dec_kb:inst11|hex_digit_2[3] ; MSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.400 ns  ; dec_kb:inst11|hex_digit_2[3] ; MSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.300 ns  ; dec_kb:inst11|hex_digit_2[6] ; MSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.300 ns  ; dec_kb:inst11|hex_digit_2[6] ; MSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.300 ns  ; dec_kb:inst11|hex_digit[2]   ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.300 ns  ; dec_kb:inst11|hex_digit[2]   ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.300 ns  ; dec_kb:inst11|hex_digit[2]   ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.300 ns  ; dec_kb:inst11|hex_digit[2]   ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.300 ns  ; dec_kb:inst11|hex_digit_2[0] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.100 ns  ; dec_kb:inst11|hex_digit_2[5] ; MSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.100 ns  ; dec_kb:inst11|hex_digit_2[5] ; MSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.100 ns  ; dec_kb:inst11|hex_digit_2[2] ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.100 ns  ; dec_kb:inst11|hex_digit_2[2] ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 91.100 ns  ; dec_kb:inst11|hex_digit_2[0] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.900 ns  ; dec_kb:inst11|hex_digit[6]   ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.900 ns  ; dec_kb:inst11|hex_digit_2[1] ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.900 ns  ; dec_kb:inst11|hex_digit[6]   ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.900 ns  ; dec_kb:inst11|hex_digit[6]   ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.900 ns  ; dec_kb:inst11|hex_digit[6]   ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.900 ns  ; dec_kb:inst11|hex_digit_2[1] ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.700 ns  ; dec_kb:inst11|hex_digit_2[2] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 90.500 ns  ; dec_kb:inst11|hex_digit_2[1] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.600 ns  ; dec_kb:inst11|hex_digit_2[2] ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.600 ns  ; dec_kb:inst11|hex_digit_2[2] ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.600 ns  ; dec_kb:inst11|hex_digit_2[0] ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.600 ns  ; dec_kb:inst11|hex_digit_2[0] ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.600 ns  ; dec_kb:inst11|hex_digit_2[0] ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.600 ns  ; dec_kb:inst11|hex_digit_2[0] ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.400 ns  ; dec_kb:inst11|hex_digit_2[1] ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.400 ns  ; dec_kb:inst11|hex_digit_2[1] ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 89.100 ns  ; dec_kb:inst11|hex_digit[4]   ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 88.700 ns  ; dec_kb:inst11|hex_digit_2[0] ; MSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 88.700 ns  ; dec_kb:inst11|hex_digit_2[0] ; MSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 88.400 ns  ; dec_kb:inst11|hex_digit_2[7] ; MSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 88.400 ns  ; dec_kb:inst11|hex_digit_2[7] ; MSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 88.300 ns  ; dec_kb:inst11|hex_digit_2[0] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 88.200 ns  ; dec_kb:inst11|hex_digit_3[2] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 87.500 ns  ; dec_kb:inst11|hex_digit[4]   ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 87.500 ns  ; dec_kb:inst11|hex_digit_3[4] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 87.500 ns  ; dec_kb:inst11|hex_digit_3[0] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 87.400 ns  ; dec_kb:inst11|hex_digit_3[1] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 87.200 ns  ; dec_kb:inst11|hex_digit_2[0] ; MSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 87.200 ns  ; dec_kb:inst11|hex_digit_2[0] ; MSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.700 ns  ; dec_kb:inst11|hex_digit_4[4] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.700 ns  ; dec_kb:inst11|hex_digit_4[6] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.700 ns  ; dec_kb:inst11|hex_digit_4[5] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.600 ns  ; dec_kb:inst11|hex_digit_3[2] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.600 ns  ; dec_kb:inst11|hex_digit_3[5] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.600 ns  ; dec_kb:inst11|hex_digit[4]   ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.300 ns  ; dec_kb:inst11|hex_digit_4[2] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.300 ns  ; dec_kb:inst11|hex_digit_4[1] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.300 ns  ; dec_kb:inst11|hex_digit_4[0] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 86.000 ns  ; dec_kb:inst11|hex_digit_4[3] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.900 ns  ; dec_kb:inst11|hex_digit_3[4] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.900 ns  ; dec_kb:inst11|hex_digit_3[0] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.800 ns  ; dec_kb:inst11|hex_digit_3[1] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.700 ns  ; dec_kb:inst11|hex_digit_3[3] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.700 ns  ; dec_kb:inst11|hex_digit_3[2] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.500 ns  ; dec_kb:inst11|hex_digit_3[7] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.300 ns  ; dec_kb:inst11|hex_digit_2[4] ; LSD_SEG_B ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit_4[4] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit_4[6] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit_4[5] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit[4]   ; LSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit[4]   ; LSD_SEG_E ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit[4]   ; LSD_SEG_D ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit[4]   ; LSD_SEG_C ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.100 ns  ; dec_kb:inst11|hex_digit_2[4] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.000 ns  ; dec_kb:inst11|hex_digit_2[2] ; MSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.000 ns  ; dec_kb:inst11|hex_digit_2[2] ; MSD_SEG_F ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.000 ns  ; dec_kb:inst11|hex_digit_3[5] ; LSD_SEG_G ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.000 ns  ; dec_kb:inst11|hex_digit_3[4] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 85.000 ns  ; dec_kb:inst11|hex_digit_3[0] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 84.900 ns  ; dec_kb:inst11|hex_digit_3[1] ; LSD_SEG_A ; kbd_clk    ;
+; N/A                                     ; None                                                ; 84.800 ns  ; dec_kb:inst11|hex_digit_2[1] ; MSD_SEG_G ; kbd_clk    ;
+; Timing analysis restricted to 200 rows. ; To change the limit use Settings (Assignments menu) ;            ;                              ;           ;            ;
++-----------------------------------------+-----------------------------------------------------+------------+------------------------------+-----------+------------+
+
+
++-----------------------------------------------------------------------------------------------+
+; th                                                                                            ;
++---------------+-------------+-----------+----------+----------------------------+-------------+
+; Minimum Slack ; Required th ; Actual th ; From     ; To                         ; To Clock    ;
++---------------+-------------+-----------+----------+----------------------------+-------------+
+; N/A           ; None        ; 3.400 ns  ; kbd_data ; keyboard:inst|SHIFTIN[8]   ; kbd_clk     ;
+; N/A           ; None        ; 3.100 ns  ; kbd_data ; keyboard:inst|READ_CHAR    ; kbd_clk     ;
+; N/A           ; None        ; 0.300 ns  ; PB[1]    ; debounce:inst1|SHIFT_PB[3] ; Clock_25Mhz ;
+; N/A           ; None        ; 0.200 ns  ; kbd_data ; keyboard:inst|ready_set    ; kbd_clk     ;
++---------------+-------------+-----------+----------+----------------------------+-------------+
+
+
++--------------------------+
+; Timing Analyzer Messages ;
++--------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Timing Analyzer
+    Info: Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version
+    Info: Processing started: Wed May 25 14:58:06 2005
+Info: Command: quartus_tan --import_settings_files=off --export_settings_files=off ap3 -c ap3
+Info: Started post-fitting delay annotation
+Info: Delay annotation completed successfully
+Warning: Found pins functioning as undefined clocks and/or memory enables
+    Info: Assuming node "kbd_clk" is an undefined clock
+    Info: Assuming node "Clock_25Mhz" is an undefined clock
+Warning: Found 8 node(s) in clock paths which may be acting as ripple and/or gated clocks -- node(s) analyzed as buffer(s) resulting in clock skew
+    Info: Detected ripple clock "clk_div:inst2|clock_1Mhz_int" as buffer
+    Info: Detected ripple clock "clk_div:inst2|clock_100Khz_int" as buffer
+    Info: Detected ripple clock "clk_div:inst2|clock_10Khz_int" as buffer
+    Info: Detected ripple clock "clk_div:inst2|clock_1Khz_int" as buffer
+    Info: Detected ripple clock "clk_div:inst2|clock_100Hz" as buffer
+    Info: Detected ripple clock "inst4" as buffer
+    Info: Detected ripple clock "keyboard:inst|ready_set" as buffer
+    Info: Detected ripple clock "keyboard:inst|scan_ready" as buffer
+Info: Clock "kbd_clk" has Internal fmax of 51.02 MHz between source register "keyboard:inst|INCNT[1]" and destination register "keyboard:inst|scan_code[0]" (period= 19.6 ns)
+    Info: + Longest register to register delay is 15.300 ns
+        Info: 1: + IC(0.000 ns) + CELL(0.000 ns) = 0.000 ns; Loc. = LC1_C9; Fanout = 3; REG Node = 'keyboard:inst|INCNT[1]'
+        Info: 2: + IC(2.800 ns) + CELL(2.700 ns) = 5.500 ns; Loc. = LC1_C10; Fanout = 8; COMB Node = 'keyboard:inst|LessThan~56'
+        Info: 3: + IC(2.900 ns) + CELL(2.700 ns) = 11.100 ns; Loc. = LC1_C11; Fanout = 8; COMB Node = 'keyboard:inst|scan_code[7]~41'
+        Info: 4: + IC(3.000 ns) + CELL(1.200 ns) = 15.300 ns; Loc. = LC7_C13; Fanout = 1; REG Node = 'keyboard:inst|scan_code[0]'
+        Info: Total cell delay = 6.600 ns ( 43.14 % )
+        Info: Total interconnect delay = 8.700 ns ( 56.86 % )
+    Info: - Smallest clock skew is -0.300 ns
+        Info: + Shortest clock path from clock "kbd_clk" to destination register is 21.600 ns
+            Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_30; Fanout = 23; CLK Node = 'kbd_clk'
+            Info: 2: + IC(11.300 ns) + CELL(0.000 ns) = 21.600 ns; Loc. = LC7_C13; Fanout = 1; REG Node = 'keyboard:inst|scan_code[0]'
+            Info: Total cell delay = 10.300 ns ( 47.69 % )
+            Info: Total interconnect delay = 11.300 ns ( 52.31 % )
+        Info: - Longest clock path from clock "kbd_clk" to source register is 21.900 ns
+            Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_30; Fanout = 23; CLK Node = 'kbd_clk'
+            Info: 2: + IC(11.600 ns) + CELL(0.000 ns) = 21.900 ns; Loc. = LC1_C9; Fanout = 3; REG Node = 'keyboard:inst|INCNT[1]'
+            Info: Total cell delay = 10.300 ns ( 47.03 % )
+            Info: Total interconnect delay = 11.600 ns ( 52.97 % )
+    Info: + Micro clock to output delay of source is 1.400 ns
+    Info: + Micro setup delay of destination is 2.600 ns
+Info: Clock "Clock_25Mhz" has Internal fmax of 47.85 MHz between source register "clk_div:inst2|clock_100hz_int" and destination register "clk_div:inst2|clock_100Hz" (period= 20.9 ns)
+    Info: + Longest register to register delay is 2.200 ns
+        Info: 1: + IC(0.000 ns) + CELL(0.000 ns) = 0.000 ns; Loc. = LC2_E6; Fanout = 2; REG Node = 'clk_div:inst2|clock_100hz_int'
+        Info: 2: + IC(0.500 ns) + CELL(1.700 ns) = 2.200 ns; Loc. = LC1_E6; Fanout = 5; REG Node = 'clk_div:inst2|clock_100Hz'
+        Info: Total cell delay = 1.700 ns ( 77.27 % )
+        Info: Total interconnect delay = 0.500 ns ( 22.73 % )
+    Info: - Smallest clock skew is -14.700 ns
+        Info: + Shortest clock path from clock "Clock_25Mhz" to destination register is 7.000 ns
+            Info: 1: + IC(0.000 ns) + CELL(2.900 ns) = 2.900 ns; Loc. = PIN_91; Fanout = 8; CLK Node = 'Clock_25Mhz'
+            Info: 2: + IC(4.100 ns) + CELL(0.000 ns) = 7.000 ns; Loc. = LC1_E6; Fanout = 5; REG Node = 'clk_div:inst2|clock_100Hz'
+            Info: Total cell delay = 2.900 ns ( 41.43 % )
+            Info: Total interconnect delay = 4.100 ns ( 58.57 % )
+        Info: - Longest clock path from clock "Clock_25Mhz" to source register is 21.700 ns
+            Info: 1: + IC(0.000 ns) + CELL(2.900 ns) = 2.900 ns; Loc. = PIN_91; Fanout = 8; CLK Node = 'Clock_25Mhz'
+            Info: 2: + IC(4.100 ns) + CELL(1.400 ns) = 8.400 ns; Loc. = LC6_E4; Fanout = 4; REG Node = 'clk_div:inst2|clock_1Mhz_int'
+            Info: 3: + IC(3.000 ns) + CELL(1.400 ns) = 12.800 ns; Loc. = LC1_E12; Fanout = 5; REG Node = 'clk_div:inst2|clock_100Khz_int'
+            Info: 4: + IC(2.900 ns) + CELL(1.400 ns) = 17.100 ns; Loc. = LC2_E8; Fanout = 5; REG Node = 'clk_div:inst2|clock_10Khz_int'
+            Info: 5: + IC(0.500 ns) + CELL(1.400 ns) = 19.000 ns; Loc. = LC1_E8; Fanout = 5; REG Node = 'clk_div:inst2|clock_1Khz_int'
+            Info: 6: + IC(2.700 ns) + CELL(0.000 ns) = 21.700 ns; Loc. = LC2_E6; Fanout = 2; REG Node = 'clk_div:inst2|clock_100hz_int'
+            Info: Total cell delay = 8.500 ns ( 39.17 % )
+            Info: Total interconnect delay = 13.200 ns ( 60.83 % )
+    Info: + Micro clock to output delay of source is 1.400 ns
+    Info: + Micro setup delay of destination is 2.600 ns
+Warning: Circuit may not operate. Detected 8 non-operational path(s) clocked by clock "kbd_clk" with clock skew larger than data delay. See Compilation Report for details.
+Info: Found hold time violation between source  pin or register "keyboard:inst|scan_code[0]" and destination pin or register "lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[0]" for clock "kbd_clk" (Hold time is 11.9 ns)
+    Info: + Largest clock skew is 12.400 ns
+        Info: + Longest clock path from clock "kbd_clk" to destination register is 34.000 ns
+            Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_30; Fanout = 23; CLK Node = 'kbd_clk'
+            Info: 2: + IC(11.600 ns) + CELL(1.400 ns) = 23.300 ns; Loc. = LC4_C9; Fanout = 2; REG Node = 'keyboard:inst|ready_set'
+            Info: 3: + IC(3.100 ns) + CELL(1.400 ns) = 27.800 ns; Loc. = LC1_C26; Fanout = 42; REG Node = 'keyboard:inst|scan_ready'
+            Info: 4: + IC(6.200 ns) + CELL(0.000 ns) = 34.000 ns; Loc. = LC6_C13; Fanout = 1; REG Node = 'lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[0]'
+            Info: Total cell delay = 13.100 ns ( 38.53 % )
+            Info: Total interconnect delay = 20.900 ns ( 61.47 % )
+        Info: - Shortest clock path from clock "kbd_clk" to source register is 21.600 ns
+            Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_30; Fanout = 23; CLK Node = 'kbd_clk'
+            Info: 2: + IC(11.300 ns) + CELL(0.000 ns) = 21.600 ns; Loc. = LC7_C13; Fanout = 1; REG Node = 'keyboard:inst|scan_code[0]'
+            Info: Total cell delay = 10.300 ns ( 47.69 % )
+            Info: Total interconnect delay = 11.300 ns ( 52.31 % )
+    Info: - Micro clock to output delay of source is 1.400 ns
+    Info: - Shortest register to register delay is 2.200 ns
+        Info: 1: + IC(0.000 ns) + CELL(0.000 ns) = 0.000 ns; Loc. = LC7_C13; Fanout = 1; REG Node = 'keyboard:inst|scan_code[0]'
+        Info: 2: + IC(0.500 ns) + CELL(1.700 ns) = 2.200 ns; Loc. = LC6_C13; Fanout = 1; REG Node = 'lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[0]'
+        Info: Total cell delay = 1.700 ns ( 77.27 % )
+        Info: Total interconnect delay = 0.500 ns ( 22.73 % )
+    Info: + Micro hold delay of destination is 3.100 ns
+Info: tsu for register "keyboard:inst|ready_set" (data pin = "kbd_data", clock pin = "kbd_clk") is 5.500 ns
+    Info: + Longest pin to register delay is 24.800 ns
+        Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_31; Fanout = 3; PIN Node = 'kbd_data'
+        Info: 2: + IC(9.600 ns) + CELL(2.700 ns) = 22.600 ns; Loc. = LC5_C9; Fanout = 1; COMB Node = 'keyboard:inst|ready_set~105'
+        Info: 3: + IC(0.500 ns) + CELL(1.700 ns) = 24.800 ns; Loc. = LC4_C9; Fanout = 2; REG Node = 'keyboard:inst|ready_set'
+        Info: Total cell delay = 14.700 ns ( 59.27 % )
+        Info: Total interconnect delay = 10.100 ns ( 40.73 % )
+    Info: + Micro setup delay of destination is 2.600 ns
+    Info: - Shortest clock path from clock "kbd_clk" to destination register is 21.900 ns
+        Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_30; Fanout = 23; CLK Node = 'kbd_clk'
+        Info: 2: + IC(11.600 ns) + CELL(0.000 ns) = 21.900 ns; Loc. = LC4_C9; Fanout = 2; REG Node = 'keyboard:inst|ready_set'
+        Info: Total cell delay = 10.300 ns ( 47.03 % )
+        Info: Total interconnect delay = 11.600 ns ( 52.97 % )
+Info: tco from clock "kbd_clk" to destination pin "LSD_SEG_B" through register "dec_kb:inst11|hex_digit_2[3]" is 100.100 ns
+    Info: + Longest clock path from clock "kbd_clk" to source register is 34.000 ns
+        Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_30; Fanout = 23; CLK Node = 'kbd_clk'
+        Info: 2: + IC(11.600 ns) + CELL(1.400 ns) = 23.300 ns; Loc. = LC4_C9; Fanout = 2; REG Node = 'keyboard:inst|ready_set'
+        Info: 3: + IC(3.100 ns) + CELL(1.400 ns) = 27.800 ns; Loc. = LC1_C26; Fanout = 42; REG Node = 'keyboard:inst|scan_ready'
+        Info: 4: + IC(6.200 ns) + CELL(0.000 ns) = 34.000 ns; Loc. = LC1_C45; Fanout = 3; REG Node = 'dec_kb:inst11|hex_digit_2[3]'
+        Info: Total cell delay = 13.100 ns ( 38.53 % )
+        Info: Total interconnect delay = 20.900 ns ( 61.47 % )
+    Info: + Micro clock to output delay of source is 1.400 ns
+    Info: + Longest register to pin delay is 64.700 ns
+        Info: 1: + IC(0.000 ns) + CELL(0.000 ns) = 0.000 ns; Loc. = LC1_C45; Fanout = 3; REG Node = 'dec_kb:inst11|hex_digit_2[3]'
+        Info: 2: + IC(3.200 ns) + CELL(2.700 ns) = 5.900 ns; Loc. = LC6_C32; Fanout = 1; COMB Node = 'dec_kb:inst11|process1~203'
+        Info: 3: + IC(3.700 ns) + CELL(2.400 ns) = 12.000 ns; Loc. = LC3_C13; Fanout = 10; COMB Node = 'dec_kb:inst11|process1~204'
+        Info: 4: + IC(5.900 ns) + CELL(2.700 ns) = 20.600 ns; Loc. = LC8_C40; Fanout = 2; COMB Node = 'dec_kb:inst11|saida~1529'
+        Info: 5: + IC(3.100 ns) + CELL(2.400 ns) = 26.100 ns; Loc. = LC2_C30; Fanout = 19; COMB Node = 'dec_kb:inst11|saida~1530'
+        Info: 6: + IC(4.000 ns) + CELL(2.400 ns) = 32.500 ns; Loc. = LC3_C35; Fanout = 1; COMB Node = 'dec_kb:inst11|reduce_or~2235'
+        Info: 7: + IC(2.700 ns) + CELL(2.700 ns) = 37.900 ns; Loc. = LC3_C33; Fanout = 1; COMB Node = 'dec_kb:inst11|reduce_or~175'
+        Info: 8: + IC(2.900 ns) + CELL(2.700 ns) = 43.500 ns; Loc. = LC6_C39; Fanout = 1; COMB Node = 'dec_kb:inst11|reduce_or~176'
+        Info: 9: + IC(0.500 ns) + CELL(2.700 ns) = 46.700 ns; Loc. = LC8_C39; Fanout = 1; COMB Node = 'dec_kb:inst11|bin_digit[1]~793'
+        Info: 10: + IC(0.500 ns) + CELL(2.700 ns) = 49.900 ns; Loc. = LC1_C39; Fanout = 7; COMB Node = 'dec_kb:inst11|bin_digit[1]~794'
+        Info: 11: + IC(3.100 ns) + CELL(2.700 ns) = 55.700 ns; Loc. = LC8_C47; Fanout = 1; COMB Node = 'dec_7seg:29|segment_data[5]~2'
+        Info: 12: + IC(4.000 ns) + CELL(5.000 ns) = 64.700 ns; Loc. = PIN_18; Fanout = 0; PIN Node = 'LSD_SEG_B'
+        Info: Total cell delay = 31.100 ns ( 48.07 % )
+        Info: Total interconnect delay = 33.600 ns ( 51.93 % )
+Info: th for register "keyboard:inst|SHIFTIN[8]" (data pin = "kbd_data", clock pin = "kbd_clk") is 3.400 ns
+    Info: + Longest clock path from clock "kbd_clk" to destination register is 21.900 ns
+        Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_30; Fanout = 23; CLK Node = 'kbd_clk'
+        Info: 2: + IC(11.600 ns) + CELL(0.000 ns) = 21.900 ns; Loc. = LC7_C9; Fanout = 1; REG Node = 'keyboard:inst|SHIFTIN[8]'
+        Info: Total cell delay = 10.300 ns ( 47.03 % )
+        Info: Total interconnect delay = 11.600 ns ( 52.97 % )
+    Info: + Micro hold delay of destination is 3.100 ns
+    Info: - Shortest pin to register delay is 21.600 ns
+        Info: 1: + IC(0.000 ns) + CELL(10.300 ns) = 10.300 ns; Loc. = PIN_31; Fanout = 3; PIN Node = 'kbd_data'
+        Info: 2: + IC(9.600 ns) + CELL(1.700 ns) = 21.600 ns; Loc. = LC7_C9; Fanout = 1; REG Node = 'keyboard:inst|SHIFTIN[8]'
+        Info: Total cell delay = 12.000 ns ( 55.56 % )
+        Info: Total interconnect delay = 9.600 ns ( 44.44 % )
+Info: Quartus II Timing Analyzer was successful. 0 errors, 3 warnings
+    Info: Processing ended: Wed May 25 14:58:07 2005
+    Info: Elapsed time: 00:00:01
+
+

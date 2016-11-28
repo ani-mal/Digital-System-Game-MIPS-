@@ -1,0 +1,149 @@
+# Copyright (C) 1991-2005 Altera Corporation
+# Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+# support information,  device programming or simulation file,  and any other
+# associated  documentation or information  provided by  Altera  or a partner
+# under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+# to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+# other  use  of such  megafunction  design,  netlist,  support  information,
+# device programming or simulation file,  or any other  related documentation
+# or information  is prohibited  for  any  other purpose,  including, but not
+# limited to  modification,  reverse engineering,  de-compiling, or use  with
+# any other  silicon devices,  unless such use is  explicitly  licensed under
+# a separate agreement with  Altera  or a megafunction partner.  Title to the
+# intellectual property,  including patents,  copyrights,  trademarks,  trade
+# secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+# support  information,  device programming or simulation file,  or any other
+# related documentation or information provided by  Altera  or a megafunction
+# partner, remains with Altera, the megafunction partner, or their respective
+# licensors. No other licenses, including any licenses needed under any third
+# party's intellectual property, are provided herein.
+
+
+# The default values for assignments are stored in the file
+#		ap3_assignment_defaults.qdf
+# If this file doesn't exist, and for assignments not listed, see file
+#		assignment_defaults.qdf
+
+# Altera recommends that you do not modify this file. This
+# file is updated automatically by the Quartus II software
+# and any changes you make may be lost or overwritten.
+
+
+# Project-Wide Assignments
+# ========================
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 3.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:04:50  AUGUST 20, 2003"
+set_global_assignment -name LAST_QUARTUS_VERSION "4.2 SP1"
+set_global_assignment -name BDF_FILE ap3.bdf
+set_global_assignment -name VHDL_FILE debounce.vhd
+set_global_assignment -name VHDL_FILE dec_7seg.vhd
+set_global_assignment -name VHDL_FILE dec_kb.vhd
+
+# Pin & Location Assignments
+# ==========================
+set_global_assignment -name RESERVE_PIN "AS INPUT TRI-STATED"
+set_location_assignment PIN_91 -to Clock_25Mhz
+set_location_assignment PIN_17 -to LSD_SEG_A
+set_location_assignment PIN_18 -to LSD_SEG_B
+set_location_assignment PIN_19 -to LSD_SEG_C
+set_location_assignment PIN_20 -to LSD_SEG_D
+set_location_assignment PIN_25 -to LSD_SEG_DP
+set_location_assignment PIN_21 -to LSD_SEG_E
+set_location_assignment PIN_23 -to LSD_SEG_F
+set_location_assignment PIN_24 -to LSD_SEG_G
+set_location_assignment PIN_6 -to MSD_SEG_A
+set_location_assignment PIN_7 -to MSD_SEG_B
+set_location_assignment PIN_8 -to MSD_SEG_C
+set_location_assignment PIN_9 -to MSD_SEG_D
+set_location_assignment PIN_14 -to MSD_SEG_DP
+set_location_assignment PIN_11 -to MSD_SEG_E
+set_location_assignment PIN_12 -to MSD_SEG_F
+set_location_assignment PIN_13 -to MSD_SEG_G
+set_location_assignment PIN_28 -to PB[1]
+set_location_assignment PIN_29 -to PB[2]
+set_location_assignment PIN_30 -to kbd_clk
+set_location_assignment PIN_31 -to kbd_data
+
+# Timing Assignments
+# ==================
+set_global_assignment -name INCLUDE_EXTERNAL_PIN_DELAYS_IN_FMAX_CALCULATIONS OFF
+
+# Analysis & Synthesis Assignments
+# ================================
+set_global_assignment -name FAMILY FLEX10K
+set_global_assignment -name CYCLONE_OPTIMIZATION_TECHNIQUE AREA
+set_global_assignment -name STRATIX_OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name APEX20K_OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name TOP_LEVEL_ENTITY ap3
+
+# Fitter Assignments
+# ==================
+set_global_assignment -name DEVICE "EPF10K70RC240-4"
+set_global_assignment -name MAX7000B_VCCIO_IOBANK1 3.3V
+set_global_assignment -name MAX7000B_VCCIO_IOBANK2 3.3V
+
+# Timing Analysis Assignments
+# ===========================
+set_global_assignment -name MAX_SCC_SIZE 50
+
+# EDA Netlist Writer Assignments
+# ==============================
+set_global_assignment -name HARDCOPY_EXTERNAL_CLOCK_JITTER "0.0 NS"
+
+# Assembler Assignments
+# =====================
+set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
+
+# Simulator Assignments
+# =====================
+set_global_assignment -name START_TIME 0NS
+set_global_assignment -name POWER_ESTIMATION_START_TIME "0 NS"
+set_global_assignment -name GLITCH_INTERVAL 1NS
+
+# Design Assistant Assignments
+# ============================
+set_global_assignment -name DRC_REPORT_TOP_FANOUT OFF
+set_global_assignment -name DRC_REPORT_FANOUT_EXCEEDING OFF
+set_global_assignment -name ASSG_CAT OFF
+set_global_assignment -name ASSG_RULE_MISSING_FMAX OFF
+set_global_assignment -name ASSG_RULE_MISSING_TIMING OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_ASYN_RAM OFF
+set_global_assignment -name CLK_CAT OFF
+set_global_assignment -name CLK_RULE_COMB_CLOCK OFF
+set_global_assignment -name CLK_RULE_INV_CLOCK OFF
+set_global_assignment -name CLK_RULE_GATING_SCHEME OFF
+set_global_assignment -name CLK_RULE_INPINS_CLKNET OFF
+set_global_assignment -name CLK_RULE_CLKNET_CLKSPINES OFF
+set_global_assignment -name CLK_RULE_MIX_EDGES OFF
+set_global_assignment -name RESET_CAT OFF
+set_global_assignment -name RESET_RULE_INPINS_RESETNET OFF
+set_global_assignment -name RESET_RULE_UNSYNCH_EXRESET OFF
+set_global_assignment -name RESET_RULE_IMSYNCH_EXRESET OFF
+set_global_assignment -name RESET_RULE_COMB_ASYNCH_RESET OFF
+set_global_assignment -name RESET_RULE_UNSYNCH_ASYNCH_DOMAIN OFF
+set_global_assignment -name RESET_RULE_IMSYNCH_ASYNCH_DOMAIN OFF
+set_global_assignment -name TIMING_CAT OFF
+set_global_assignment -name TIMING_RULE_SHIFT_REG OFF
+set_global_assignment -name TIMING_RULE_COIN_CLKEDGE OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_COMB_DRIVES_RAM_WE OFF
+set_global_assignment -name NONSYNCHSTRUCT_CAT OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_COMBLOOP OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_REG_LOOP OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_DELAY_CHAIN OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_RIPPLE_CLK OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_ILLEGAL_PULSE_GEN OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_MULTI_VIBRATOR OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_SRLATCH OFF
+set_global_assignment -name NONSYNCHSTRUCT_RULE_LATCH_UNIDENTIFIED OFF
+set_global_assignment -name SIGNALRACE_CAT OFF
+set_global_assignment -name ACLK_CAT OFF
+set_global_assignment -name ACLK_RULE_NO_SZER_ACLK_DOMAIN OFF
+set_global_assignment -name ACLK_RULE_SZER_BTW_ACLK_DOMAIN OFF
+set_global_assignment -name ACLK_RULE_IMSZER_ADOMAIN OFF
+set_global_assignment -name HCPY_CAT OFF
+set_global_assignment -name HCPY_VREF_PINS OFF
+
+# SignalTap II Assignments
+# ========================
+set_global_assignment -name HUB_ENTITY_NAME SLD_HUB
+set_global_assignment -name HUB_INSTANCE_NAME SLD_HUB_INST

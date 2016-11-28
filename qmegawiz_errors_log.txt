@@ -1,0 +1,66 @@
+
+
+C:/Simoes/USP/Aulas/ELD2/2011/AulasPraticas/TecladoeVideo_Pong eld2/lpm_rom0.vhd
+
+Aug 29 07PM:16:26>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Simoes/USP/Aulas/ELD2/2011/AulasPraticas/TecladoeVideo_Pong eld2/lpm_rom0.vhd
+
+Aug 29 07PM:16:29>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Simoes/USP/Aulas/ELD2/2011/AulasPraticas/TecladoeVideo_Pong eld2/lpm_ram_dq2.vhd
+
+Aug 29 07PM:16:33>: Megafunction LPM_RAM_DQ is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Simoes/USP/Aulas/ELD2/2011/AulasPraticas/TecladoeVideo_Pong eld2/lpm_ram_dq2.vhd
+
+Aug 29 07PM:16:37>: Megafunction LPM_RAM_DQ is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Simoes/USP/Aulas/ELD2/2011/AulasPraticas/TecladoeVideo_Pong eld2/lpm_ram_dq2.vhd
+
+Aug 29 07PM:16:54>: Megafunction LPM_RAM_DQ is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Simoes/USP/Aulas/ELD2/2011/AulasPraticas/TecladoeVideo_Pong eld2/lpm_rom0.vhd
+
+Aug 29 09PM:12:40>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Comp/Lógica Digital - Ozorio e Vanderlei/PrimeiraParte_TecladoeVideo_Atropele _o_Tomate/lpm_rom0.vhd
+
+Sep 30 12PM:35:58>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Comp/Lógica Digital - Ozorio e Vanderlei/PrimeiraParte_TecladoeVideo_Atropele _o_Tomate/lpm_rom0.vhd
+
+Sep 30 12PM:36:09>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Comp/Lógica Digital - Ozorio e Vanderlei/PrimeiraParte_TecladoeVideo_Atropele _o_Tomate/lpm_rom0.vhd
+
+Sep 30 12PM:36:11>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Comp/Lógica Digital - Ozorio e Vanderlei/PrimeiraParte_TecladoeVideo_Atropele _o_Tomate/lpm_rom0.vhd
+
+Sep 30 12PM:36:14>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Comp/Lógica Digital - Ozorio e Vanderlei/PrimeiraParte_TecladoeVideo_Atropele _o_Tomate/lpm_rom0.vhd
+
+Sep 30 12PM:36:21>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Comp/Lógica Digital - Ozorio e Vanderlei/PrimeiraParte_TecladoeVideo_Atropele _o_Tomate/lpm_rom0.vhd
+
+Sep 30 12PM:36:25>: Megafunction LPM_ROM is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Comp/Lógica Digital - Ozorio e Vanderlei/PrimeiraParte_TecladoeVideo_Atropele _o_Tomate/lpm_ram_dq2.vhd
+
+Oct 01 11PM:24:12>: Megafunction LPM_RAM_DQ is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted

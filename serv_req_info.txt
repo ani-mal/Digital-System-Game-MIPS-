@@ -1,0 +1,46 @@
+<internal_error>
+	<executable>quartus.exe</executable>
+	<sub_system>ERR</sub_system>
+	<callstack>Stack Trace:
+10012e3b: afc_merge_duplicate_menu_items() + 0x10b (GCL_AFC)
+10011f3e: AFC_EDITOR_TEMPLATE::merge_menus() + 0x74 (GCL_AFC)
+05d75e32: resr_rpw_dll_get_template_classes() + 0x3972 (resr_rpw)
+05d719af: 0x19af (resr_rpw)
+
+End-trace
+</callstack>
+	<error>Fatal error detected: Access Violation</error>
+	<date>Tue Jul 05 20:13:53 2005</date>
+	<version>Quartus II Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version</version>
+	<full_error>Fatal error detected: Access Violation
+Stack Trace:
+10012e3b: afc_merge_duplicate_menu_items() + 0x10b (GCL_AFC)
+10011f3e: AFC_EDITOR_TEMPLATE::merge_menus() + 0x74 (GCL_AFC)
+05d75e32: resr_rpw_dll_get_template_classes() + 0x3972 (resr_rpw)
+05d719af: 0x19af (resr_rpw)
+
+End-trace
+
+Quartus II Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version </full_error>
+</internal_error>
+<internal_error>
+	<executable>quartus.exe</executable>
+	<sub_system>ERR</sub_system>
+	<callstack>Stack Trace:
+0525540a: resr_rpw_dll_get_template_classes() + 0x2f4a (resr_rpw)
+052559c2: resr_rpw_dll_get_template_classes() + 0x3502 (resr_rpw)
+
+End-trace
+</callstack>
+	<error>Fatal error detected: Access Violation</error>
+	<date>Thu Jul 07 22:42:00 2005</date>
+	<version>Quartus II Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version</version>
+	<full_error>Fatal error detected: Access Violation
+Stack Trace:
+0525540a: resr_rpw_dll_get_template_classes() + 0x2f4a (resr_rpw)
+052559c2: resr_rpw_dll_get_template_classes() + 0x3502 (resr_rpw)
+
+End-trace
+
+Quartus II Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version </full_error>
+</internal_error>

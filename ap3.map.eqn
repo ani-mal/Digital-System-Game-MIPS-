@@ -1,0 +1,1500 @@
+--G1_hex_digit_3[4] is dec_kb:inst11|hex_digit_3[4]
+--operation mode is normal
+
+G1_hex_digit_3[4]_lut_out = G1_hex_digit_2[4];
+G1_hex_digit_3[4] = DFFEA(G1_hex_digit_3[4]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_2[4] is dec_kb:inst11|hex_digit_2[4]
+--operation mode is normal
+
+G1_hex_digit_2[4]_lut_out = G1_hex_digit[4];
+G1_hex_digit_2[4] = DFFEA(G1_hex_digit_2[4]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_2[7] is dec_kb:inst11|hex_digit_2[7]
+--operation mode is normal
+
+G1_hex_digit_2[7]_lut_out = G1_hex_digit[7];
+G1_hex_digit_2[7] = DFFEA(G1_hex_digit_2[7]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_2[6] is dec_kb:inst11|hex_digit_2[6]
+--operation mode is normal
+
+G1_hex_digit_2[6]_lut_out = G1_hex_digit[6];
+G1_hex_digit_2[6] = DFFEA(G1_hex_digit_2[6]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_2[5] is dec_kb:inst11|hex_digit_2[5]
+--operation mode is normal
+
+G1_hex_digit_2[5]_lut_out = G1_hex_digit[5];
+G1_hex_digit_2[5] = DFFEA(G1_hex_digit_2[5]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_2[3] is dec_kb:inst11|hex_digit_2[3]
+--operation mode is normal
+
+G1_hex_digit_2[3]_lut_out = G1_hex_digit[3];
+G1_hex_digit_2[3] = DFFEA(G1_hex_digit_2[3]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L05 is dec_kb:inst11|process1~203
+--operation mode is normal
+
+G1L05 = G1_hex_digit_2[7] & G1_hex_digit_2[6] & G1_hex_digit_2[5] & !G1_hex_digit_2[3];
+
+
+--G1_hex_digit_2[2] is dec_kb:inst11|hex_digit_2[2]
+--operation mode is normal
+
+G1_hex_digit_2[2]_lut_out = G1_hex_digit[2];
+G1_hex_digit_2[2] = DFFEA(G1_hex_digit_2[2]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_2[1] is dec_kb:inst11|hex_digit_2[1]
+--operation mode is normal
+
+G1_hex_digit_2[1]_lut_out = G1_hex_digit[1];
+G1_hex_digit_2[1] = DFFEA(G1_hex_digit_2[1]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_2[0] is dec_kb:inst11|hex_digit_2[0]
+--operation mode is normal
+
+G1_hex_digit_2[0]_lut_out = G1_hex_digit[0];
+G1_hex_digit_2[0] = DFFEA(G1_hex_digit_2[0]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L15 is dec_kb:inst11|process1~204
+--operation mode is normal
+
+G1L15 = G1L05 & !G1_hex_digit_2[2] & !G1_hex_digit_2[1] & !G1_hex_digit_2[0];
+
+
+--G1L801 is dec_kb:inst11|saida~1529
+--operation mode is normal
+
+G1L801 = G1L15 & G1_hex_digit_3[4] # !G1L15 & G1_hex_digit_2[4];
+
+
+--G1_hex_digit[4] is dec_kb:inst11|hex_digit[4]
+--operation mode is normal
+
+G1_hex_digit[4]_lut_out = K1_dffs[4];
+G1_hex_digit[4] = DFFEA(G1_hex_digit[4]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit[7] is dec_kb:inst11|hex_digit[7]
+--operation mode is normal
+
+G1_hex_digit[7]_lut_out = K1_dffs[7];
+G1_hex_digit[7] = DFFEA(G1_hex_digit[7]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit[6] is dec_kb:inst11|hex_digit[6]
+--operation mode is normal
+
+G1_hex_digit[6]_lut_out = K1_dffs[6];
+G1_hex_digit[6] = DFFEA(G1_hex_digit[6]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit[5] is dec_kb:inst11|hex_digit[5]
+--operation mode is normal
+
+G1_hex_digit[5]_lut_out = K1_dffs[5];
+G1_hex_digit[5] = DFFEA(G1_hex_digit[5]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit[3] is dec_kb:inst11|hex_digit[3]
+--operation mode is normal
+
+G1_hex_digit[3]_lut_out = K1_dffs[3];
+G1_hex_digit[3] = DFFEA(G1_hex_digit[3]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L25 is dec_kb:inst11|process1~205
+--operation mode is normal
+
+G1L25 = G1_hex_digit[7] & G1_hex_digit[6] & G1_hex_digit[5] & !G1_hex_digit[3];
+
+
+--G1_hex_digit[2] is dec_kb:inst11|hex_digit[2]
+--operation mode is normal
+
+G1_hex_digit[2]_lut_out = K1_dffs[2];
+G1_hex_digit[2] = DFFEA(G1_hex_digit[2]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit[1] is dec_kb:inst11|hex_digit[1]
+--operation mode is normal
+
+G1_hex_digit[1]_lut_out = K1_dffs[1];
+G1_hex_digit[1] = DFFEA(G1_hex_digit[1]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit[0] is dec_kb:inst11|hex_digit[0]
+--operation mode is normal
+
+G1_hex_digit[0]_lut_out = K1_dffs[0];
+G1_hex_digit[0] = DFFEA(G1_hex_digit[0]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L35 is dec_kb:inst11|process1~206
+--operation mode is normal
+
+G1L35 = G1L25 & !G1_hex_digit[2] & !G1_hex_digit[1] & !G1_hex_digit[0];
+
+
+--G1L901 is dec_kb:inst11|saida~1530
+--operation mode is normal
+
+G1L901 = G1L35 & G1L801 # !G1L35 & G1_hex_digit[4];
+
+
+--G1_hex_digit_3[5] is dec_kb:inst11|hex_digit_3[5]
+--operation mode is normal
+
+G1_hex_digit_3[5]_lut_out = G1_hex_digit_2[5];
+G1_hex_digit_3[5] = DFFEA(G1_hex_digit_3[5]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L011 is dec_kb:inst11|saida~1531
+--operation mode is normal
+
+G1L011 = G1L15 & G1_hex_digit_3[5] # !G1L15 & G1_hex_digit_2[5];
+
+
+--G1L09 is dec_kb:inst11|reduce_or~2232
+--operation mode is normal
+
+G1L09 = G1L901 & G1L35 & G1L011 # !G1L35 & G1_hex_digit[5];
+
+
+--G1_hex_digit_3[6] is dec_kb:inst11|hex_digit_3[6]
+--operation mode is normal
+
+G1_hex_digit_3[6]_lut_out = G1_hex_digit_2[6];
+G1_hex_digit_3[6] = DFFEA(G1_hex_digit_3[6]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L111 is dec_kb:inst11|saida~1532
+--operation mode is normal
+
+G1L111 = G1L15 & G1_hex_digit_3[6] # !G1L15 & G1_hex_digit_2[6];
+
+
+--G1L211 is dec_kb:inst11|saida~1533
+--operation mode is normal
+
+G1L211 = G1L35 & G1L111 # !G1L35 & G1_hex_digit[6];
+
+
+--G1_hex_digit_3[3] is dec_kb:inst11|hex_digit_3[3]
+--operation mode is normal
+
+G1_hex_digit_3[3]_lut_out = G1_hex_digit_2[3];
+G1_hex_digit_3[3] = DFFEA(G1_hex_digit_3[3]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L311 is dec_kb:inst11|saida~1534
+--operation mode is normal
+
+G1L311 = G1L35 & G1_hex_digit_2[3] # G1L15 & G1_hex_digit_3[3];
+
+
+--G1L411 is dec_kb:inst11|saida~1535
+--operation mode is normal
+
+G1L411 = G1_hex_digit[3] # G1L311;
+
+
+--G1_hex_digit_3[7] is dec_kb:inst11|hex_digit_3[7]
+--operation mode is normal
+
+G1_hex_digit_3[7]_lut_out = G1_hex_digit_2[7];
+G1_hex_digit_3[7] = DFFEA(G1_hex_digit_3[7]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L511 is dec_kb:inst11|saida~1536
+--operation mode is normal
+
+G1L511 = G1L15 & G1_hex_digit_3[7] # !G1L15 & G1_hex_digit_2[7];
+
+
+--G1L611 is dec_kb:inst11|saida~1537
+--operation mode is normal
+
+G1L611 = G1L35 & G1L511 # !G1L35 & G1_hex_digit[7];
+
+
+--G1L46 is dec_kb:inst11|reduce_nor~842
+--operation mode is normal
+
+G1L46 = G1L09 & G1L211 & G1L411 & !G1L611;
+
+
+--G1_hex_digit_3[2] is dec_kb:inst11|hex_digit_3[2]
+--operation mode is normal
+
+G1_hex_digit_3[2]_lut_out = G1_hex_digit_2[2];
+G1_hex_digit_3[2] = DFFEA(G1_hex_digit_3[2]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L711 is dec_kb:inst11|saida~1538
+--operation mode is normal
+
+G1L711 = G1L35 & G1_hex_digit_2[2] # G1L15 & G1_hex_digit_3[2];
+
+
+--G1L811 is dec_kb:inst11|saida~1539
+--operation mode is normal
+
+G1L811 = G1_hex_digit[2] # G1L711;
+
+
+--G1_hex_digit_3[0] is dec_kb:inst11|hex_digit_3[0]
+--operation mode is normal
+
+G1_hex_digit_3[0]_lut_out = G1_hex_digit_2[0];
+G1_hex_digit_3[0] = DFFEA(G1_hex_digit_3[0]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L911 is dec_kb:inst11|saida~1540
+--operation mode is normal
+
+G1L911 = G1L35 & G1_hex_digit_2[0] # G1L15 & G1_hex_digit_3[0];
+
+
+--G1_hex_digit_3[1] is dec_kb:inst11|hex_digit_3[1]
+--operation mode is normal
+
+G1_hex_digit_3[1]_lut_out = G1_hex_digit_2[1];
+G1_hex_digit_3[1] = DFFEA(G1_hex_digit_3[1]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L021 is dec_kb:inst11|saida~1541
+--operation mode is normal
+
+G1L021 = G1L35 & G1_hex_digit_2[1] # G1L15 & G1_hex_digit_3[1];
+
+
+--G1L121 is dec_kb:inst11|saida~1542
+--operation mode is normal
+
+G1L121 = G1_hex_digit[1] # G1L021;
+
+
+--G1L56 is dec_kb:inst11|reduce_nor~843
+--operation mode is normal
+
+G1L56 = G1L811 & !G1L121 & G1_hex_digit[0] # G1L911;
+
+
+--G1L85 is dec_kb:inst11|reduce_nor~6
+--operation mode is normal
+
+G1L85 = G1L46 & G1L56;
+
+
+--G1_hex_digit_4[4] is dec_kb:inst11|hex_digit_4[4]
+--operation mode is normal
+
+G1_hex_digit_4[4]_lut_out = G1_hex_digit_3[4];
+G1_hex_digit_4[4] = DFFEA(G1_hex_digit_4[4]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_4[6] is dec_kb:inst11|hex_digit_4[6]
+--operation mode is normal
+
+G1_hex_digit_4[6]_lut_out = G1_hex_digit_3[6];
+G1_hex_digit_4[6] = DFFEA(G1_hex_digit_4[6]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_4[5] is dec_kb:inst11|hex_digit_4[5]
+--operation mode is normal
+
+G1_hex_digit_4[5]_lut_out = G1_hex_digit_3[5];
+G1_hex_digit_4[5] = DFFEA(G1_hex_digit_4[5]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L45 is dec_kb:inst11|process1~207
+--operation mode is normal
+
+G1L45 = G1_hex_digit[4] # G1_hex_digit_4[4] # !G1_hex_digit_4[5] # !G1_hex_digit_4[6];
+
+
+--G1_hex_digit_4[3] is dec_kb:inst11|hex_digit_4[3]
+--operation mode is normal
+
+G1_hex_digit_4[3]_lut_out = G1_hex_digit_3[3];
+G1_hex_digit_4[3] = DFFEA(G1_hex_digit_4[3]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_4[2] is dec_kb:inst11|hex_digit_4[2]
+--operation mode is normal
+
+G1_hex_digit_4[2]_lut_out = G1_hex_digit_3[2];
+G1_hex_digit_4[2] = DFFEA(G1_hex_digit_4[2]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_4[1] is dec_kb:inst11|hex_digit_4[1]
+--operation mode is normal
+
+G1_hex_digit_4[1]_lut_out = G1_hex_digit_3[1];
+G1_hex_digit_4[1] = DFFEA(G1_hex_digit_4[1]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1_hex_digit_4[0] is dec_kb:inst11|hex_digit_4[0]
+--operation mode is normal
+
+G1_hex_digit_4[0]_lut_out = G1_hex_digit_3[0];
+G1_hex_digit_4[0] = DFFEA(G1_hex_digit_4[0]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L55 is dec_kb:inst11|process1~208
+--operation mode is normal
+
+G1L55 = G1_hex_digit_4[3] # G1_hex_digit_4[2] # G1_hex_digit_4[1] # G1_hex_digit_4[0];
+
+
+--G1_hex_digit_4[7] is dec_kb:inst11|hex_digit_4[7]
+--operation mode is normal
+
+G1_hex_digit_4[7]_lut_out = G1_hex_digit_3[7];
+G1_hex_digit_4[7] = DFFEA(G1_hex_digit_4[7]_lut_out, C1_scan_ready, , , , , );
+
+
+--G1L94 is dec_kb:inst11|process1~3
+--operation mode is normal
+
+G1L94 = G1L45 # G1L55 # !G1L35 # !G1_hex_digit_4[7];
+
+
+--G1L65 is dec_kb:inst11|process1~209
+--operation mode is normal
+
+G1L65 = G1L17 # G1L15 & !G1_hex_digit_2[4] # !G1L94;
+
+
+--G1L1 is dec_kb:inst11|bin_digit[0]~790
+--operation mode is normal
+
+G1L1 = G1L65 & G1L85 # !G1L65 & !G1L601 # !G1L501;
+
+
+--G1L221 is dec_kb:inst11|saida~1543
+--operation mode is normal
+
+G1L221 = G1_hex_digit[0] # G1L911;
+
+
+--G1L38 is dec_kb:inst11|reduce_or~155
+--operation mode is normal
+
+G1L38 = G1L221 & G1L121 & !G1L811 # !G1L121 & G1L411 & G1L811;
+
+
+--G1L5 is dec_kb:inst11|bin_digit[2]~791
+--operation mode is normal
+
+G1L5 = !G1L901 & G1L35 & !G1L011 # !G1L35 & !G1_hex_digit[5];
+
+
+--G1L2 is dec_kb:inst11|bin_digit[1]~792
+--operation mode is normal
+
+G1L2 = G1L211 & !G1L65 & !G1L5 # !G1L38;
+
+
+--G1L57 is dec_kb:inst11|reduce_or~97
+--operation mode is normal
+
+G1L57 = G1L121 & !G1L811 & G1L221 # !G1L901 # !G1L121 & G1L811 & G1L221 $ !G1L901;
+
+
+--G1L321 is dec_kb:inst11|saida~1544
+--operation mode is normal
+
+G1L321 = G1L35 & G1L011 # !G1L35 & G1_hex_digit[5];
+
+
+--G1L19 is dec_kb:inst11|reduce_or~2235
+--operation mode is normal
+
+G1L19 = G1L901 & G1L811 & !G1L221 & !G1L121;
+
+
+--G1L47 is dec_kb:inst11|reduce_or~94
+--operation mode is normal
+
+G1L47 = G1L56 & G1L35 & G1L801 # !G1L35 & G1_hex_digit[4];
+
+
+--G1L68 is dec_kb:inst11|reduce_or~175
+--operation mode is normal
+
+G1L68 = G1L321 & G1L411 # !G1L321 & G1L411 & !G1L19 # !G1L411 & !G1L47;
+
+
+--G1L67 is dec_kb:inst11|reduce_or~99
+--operation mode is normal
+
+G1L67 = !G1L221 & G1L121 & !G1L811 & G1L901 # !G1L121 & G1L811;
+
+
+--G1L78 is dec_kb:inst11|reduce_or~176
+--operation mode is normal
+
+G1L78 = G1L321 & G1L68 & !G1L67 # !G1L68 & !G1L57 # !G1L321 & G1L68;
+
+
+--G1L3 is dec_kb:inst11|bin_digit[1]~793
+--operation mode is normal
+
+G1L3 = !G1L65 & G1L611 # G1L78 & !G1L211;
+
+
+--G1L4 is dec_kb:inst11|bin_digit[1]~794
+--operation mode is normal
+
+G1L4 = G1L2 # G1L3 # G1L65 & !G1L85;
+
+
+--G1L6 is dec_kb:inst11|bin_digit[2]~796
+--operation mode is normal
+
+G1L6 = G1L65 & G1L46 & G1L56 # !G1L11;
+
+
+--G1L29 is dec_kb:inst11|reduce_or~2236
+--operation mode is normal
+
+G1L29 = !G1_hex_digit[3] & !G1L311 # !G1L56 # !G1L5;
+
+
+--G1L08 is dec_kb:inst11|reduce_or~114
+--operation mode is normal
+
+G1L08 = G1L221 & !G1L901 & G1L411 $ !G1L811 # !G1L221 & G1L811;
+
+
+--G1L39 is dec_kb:inst11|reduce_or~2237
+--operation mode is normal
+
+G1L39 = G1L221 & G1L901 & G1L411 & !G1L811;
+
+
+--G1L97 is dec_kb:inst11|reduce_or~110
+--operation mode is normal
+
+G1L97 = G1L811 & G1L901 & G1L221 # G1L411;
+
+
+--G1L88 is dec_kb:inst11|reduce_or~177
+--operation mode is normal
+
+G1L88 = G1L321 & G1L121 # !G1L321 & G1L121 & !G1L39 # !G1L121 & !G1L97;
+
+
+--G1L18 is dec_kb:inst11|reduce_or~116
+--operation mode is normal
+
+G1L18 = !G1L811 & G1L901 $ (G1L221 # G1L411);
+
+
+--G1L98 is dec_kb:inst11|reduce_or~178
+--operation mode is normal
+
+G1L98 = G1L321 & G1L88 & !G1L18 # !G1L88 & !G1L08 # !G1L321 & G1L88;
+
+
+--G1L7 is dec_kb:inst11|bin_digit[2]~797
+--operation mode is normal
+
+G1L7 = !G1L65 & G1L35 & !G1L511 # !G1L35 & !G1_hex_digit[7];
+
+
+--G1L49 is dec_kb:inst11|reduce_or~2238
+--operation mode is normal
+
+G1L49 = G1L211 & G1L29 # !G1L211 & G1L98 # !G1L7;
+
+
+--B1L7 is dec_7seg:29|segment_data[6]~0
+--operation mode is normal
+
+B1L7 = G1L6 & !G1L4 & G1L1 $ !G1L49 # !G1L6 & G1L1 & G1L4 $ !G1L49;
+
+
+--B1L6 is dec_7seg:29|segment_data[5]~2
+--operation mode is normal
+
+B1L6 = G1L4 & G1L1 & G1L49 # !G1L1 & G1L6 # !G1L4 & G1L6 & G1L1 $ G1L49;
+
+
+--B1L5 is dec_7seg:29|segment_data[4]~4
+--operation mode is normal
+
+B1L5 = G1L6 & G1L49 & G1L4 # !G1L1 # !G1L6 & !G1L1 & G1L4 & !G1L49;
+
+
+--B1L4 is dec_7seg:29|segment_data[3]~6
+--operation mode is normal
+
+B1L4 = G1L4 & G1L1 & G1L6 # !G1L1 & !G1L6 & G1L49 # !G1L4 & !G1L49 & G1L1 $ G1L6;
+
+
+--B1L3 is dec_7seg:29|segment_data[2]~8
+--operation mode is normal
+
+B1L3 = G1L4 & G1L1 & !G1L49 # !G1L4 & G1L6 & !G1L49 # !G1L6 & G1L1;
+
+
+--B1L2 is dec_7seg:29|segment_data[1]~10
+--operation mode is normal
+
+B1L2 = G1L1 & G1L49 $ (G1L4 # !G1L6) # !G1L1 & G1L4 & !G1L6 & !G1L49;
+
+
+--B1L1 is dec_7seg:29|segment_data[0]~12
+--operation mode is normal
+
+B1L1 = G1L1 & G1L49 # G1L4 $ G1L6 # !G1L1 & G1L4 # G1L6 $ G1L49;
+
+
+--G1L06 is dec_kb:inst11|reduce_nor~52
+--operation mode is normal
+
+G1L06 = G1L121 & !G1L811 & G1L411 # !G1L121 & G1L811 & G1L221 # G1L411;
+
+
+--G1L26 is dec_kb:inst11|reduce_nor~56
+--operation mode is normal
+
+G1L26 = G1L121 & !G1L811 # !G1L121 & G1L221 & !G1L411 # !G1L221 & G1L811;
+
+
+--G1L66 is dec_kb:inst11|reduce_nor~844
+--operation mode is normal
+
+G1L66 = G1L321 & !G1L26 # !G1L321 & !G1L06;
+
+
+--G1L16 is dec_kb:inst11|reduce_nor~54
+--operation mode is normal
+
+G1L16 = G1L811 $ (G1L121 # G1L221 & !G1L411);
+
+
+--G1L76 is dec_kb:inst11|reduce_nor~845
+--operation mode is normal
+
+G1L76 = G1L901 & G1L66 # !G1L901 & G1L321 & !G1L16;
+
+
+--G1L86 is dec_kb:inst11|reduce_nor~846
+--operation mode is normal
+
+G1L86 = G1L76 # G1L35 & G1L511 # !G1L35 & G1_hex_digit[7];
+
+
+--G1L36 is dec_kb:inst11|reduce_nor~65
+--operation mode is normal
+
+G1L36 = G1L121 & !G1L811 & G1L221 # !G1L411 # !G1L121 & G1L811 & G1L221 $ !G1L411;
+
+
+--G1L96 is dec_kb:inst11|reduce_nor~847
+--operation mode is normal
+
+G1L96 = G1L86 # G1L211 & !G1L36 # !G1L5 # !G1L211 & G1L5;
+
+
+--G1L58 is dec_kb:inst11|reduce_or~159
+--operation mode is normal
+
+G1L58 = G1L901 & !G1L211 & G1L411 $ G1L321 # !G1L901 & !G1L411 & G1L211 $ G1L321;
+
+
+--G1L59 is dec_kb:inst11|reduce_or~2239
+--operation mode is normal
+
+G1L59 = G1L611 # !G1L221 & !G1L121 & !G1L58;
+
+
+--G1L87 is dec_kb:inst11|reduce_or~107
+--operation mode is normal
+
+G1L87 = G1L211 & !G1L901 & G1L221 # !G1L411;
+
+
+--G1L69 is dec_kb:inst11|reduce_or~2240
+--operation mode is normal
+
+G1L69 = G1L59 # !G1L811 & !G1L321 & !G1L87;
+
+
+--G1L79 is dec_kb:inst11|reduce_or~2241
+--operation mode is normal
+
+G1L79 = G1L321 & G1L211 # !G1L901 & !G1L221;
+
+
+--G1L89 is dec_kb:inst11|reduce_or~2243
+--operation mode is normal
+
+G1L89 = G1L69 # G1L79 & !G1L811 # !G1L701;
+
+
+--B2L6 is dec_7seg:30|segment_data[6]~69
+--operation mode is normal
+
+B2L6 = G1L65 # G1L96 $ G1L89;
+
+
+--G1L75 is dec_kb:inst11|reduce_nor~3
+--operation mode is normal
+
+G1L75 = G1_hex_digit_2[4] # !G1L15;
+
+
+--B2L5 is dec_7seg:30|segment_data[5]~7
+--operation mode is normal
+
+B2L5 = G1L17 # !G1L89 # !G1L75 # !G1L94;
+
+
+--B2L4 is dec_7seg:30|segment_data[3]~9
+--operation mode is normal
+
+B2L4 = !G1L17 & G1L94 & G1L75 & G1L89;
+
+
+--G1L421 is dec_kb:inst11|saida~1545
+--operation mode is normal
+
+G1L421 = !G1_hex_digit[0] & !G1L911 & G1_hex_digit[1] # G1L021;
+
+
+--G1L95 is dec_kb:inst11|reduce_nor~8
+--operation mode is normal
+
+G1L95 = G1L46 & G1L56 # G1L421 & !G1L811;
+
+
+--B2L3 is dec_7seg:30|segment_data[2]~28
+--operation mode is normal
+
+B2L3 = G1L65 & G1L95 # !G1L65 & !G1L96;
+
+
+--B2L2 is dec_7seg:30|segment_data[1]~11
+--operation mode is normal
+
+B2L2 = G1L95 & G1L17 # !G1L75 # !G1L94;
+
+
+--B2L1 is dec_7seg:30|segment_data[0]~70
+--operation mode is normal
+
+B2L1 = G1L65 & G1L95;
+
+
+--inst6 is inst6
+--operation mode is normal
+
+inst6_lut_out = !inst6;
+inst6 = DFFEA(inst6_lut_out, inst4, , , , , );
+
+
+--inst4 is inst4
+--operation mode is normal
+
+inst4_lut_out = !inst4;
+inst4 = DFFEA(inst4_lut_out, C1_scan_ready, , , , , );
+
+
+--C1_scan_ready is keyboard:inst|scan_ready
+--operation mode is normal
+
+C1_scan_ready_lut_out = VCC;
+C1_scan_ready = DFFEA(C1_scan_ready_lut_out, C1_ready_set, !C1_scan_ready, , , , );
+
+
+--K1_dffs[4] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[4]
+--operation mode is normal
+
+K1_dffs[4]_lut_out = C1_scan_code[4];
+K1_dffs[4] = DFFEA(K1_dffs[4]_lut_out, C1_scan_ready, , , , , );
+
+
+--K1_dffs[7] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[7]
+--operation mode is normal
+
+K1_dffs[7]_lut_out = C1_scan_code[7];
+K1_dffs[7] = DFFEA(K1_dffs[7]_lut_out, C1_scan_ready, , , , , );
+
+
+--K1_dffs[6] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[6]
+--operation mode is normal
+
+K1_dffs[6]_lut_out = C1_scan_code[6];
+K1_dffs[6] = DFFEA(K1_dffs[6]_lut_out, C1_scan_ready, , , , , );
+
+
+--K1_dffs[5] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[5]
+--operation mode is normal
+
+K1_dffs[5]_lut_out = C1_scan_code[5];
+K1_dffs[5] = DFFEA(K1_dffs[5]_lut_out, C1_scan_ready, , , , , );
+
+
+--K1_dffs[3] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[3]
+--operation mode is normal
+
+K1_dffs[3]_lut_out = C1_scan_code[3];
+K1_dffs[3] = DFFEA(K1_dffs[3]_lut_out, C1_scan_ready, , , , , );
+
+
+--K1_dffs[2] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[2]
+--operation mode is normal
+
+K1_dffs[2]_lut_out = C1_scan_code[2];
+K1_dffs[2] = DFFEA(K1_dffs[2]_lut_out, C1_scan_ready, , , , , );
+
+
+--K1_dffs[1] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[1]
+--operation mode is normal
+
+K1_dffs[1]_lut_out = C1_scan_code[1];
+K1_dffs[1] = DFFEA(K1_dffs[1]_lut_out, C1_scan_ready, , , , , );
+
+
+--K1_dffs[0] is lpm_dff0:inst10|lpm_ff:lpm_ff_component|dffs[0]
+--operation mode is normal
+
+K1_dffs[0]_lut_out = C1_scan_code[0];
+K1_dffs[0] = DFFEA(K1_dffs[0]_lut_out, C1_scan_ready, , , , , );
+
+
+--C1_ready_set is keyboard:inst|ready_set
+--operation mode is normal
+
+C1_ready_set_lut_out = C1L41;
+C1_ready_set = DFFEA(C1_ready_set_lut_out, kbd_clk, , , C1L51, , );
+
+
+--C1_scan_code[4] is keyboard:inst|scan_code[4]
+--operation mode is normal
+
+C1_scan_code[4]_lut_out = C1_SHIFTIN[4];
+C1_scan_code[4] = DFFEA(C1_scan_code[4]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--C1_scan_code[7] is keyboard:inst|scan_code[7]
+--operation mode is normal
+
+C1_scan_code[7]_lut_out = C1_SHIFTIN[7];
+C1_scan_code[7] = DFFEA(C1_scan_code[7]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--C1_scan_code[6] is keyboard:inst|scan_code[6]
+--operation mode is normal
+
+C1_scan_code[6]_lut_out = C1_SHIFTIN[6];
+C1_scan_code[6] = DFFEA(C1_scan_code[6]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--C1_scan_code[5] is keyboard:inst|scan_code[5]
+--operation mode is normal
+
+C1_scan_code[5]_lut_out = C1_SHIFTIN[5];
+C1_scan_code[5] = DFFEA(C1_scan_code[5]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--C1_scan_code[3] is keyboard:inst|scan_code[3]
+--operation mode is normal
+
+C1_scan_code[3]_lut_out = C1_SHIFTIN[3];
+C1_scan_code[3] = DFFEA(C1_scan_code[3]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--C1_scan_code[2] is keyboard:inst|scan_code[2]
+--operation mode is normal
+
+C1_scan_code[2]_lut_out = C1_SHIFTIN[2];
+C1_scan_code[2] = DFFEA(C1_scan_code[2]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--C1_scan_code[1] is keyboard:inst|scan_code[1]
+--operation mode is normal
+
+C1_scan_code[1]_lut_out = C1_SHIFTIN[1];
+C1_scan_code[1] = DFFEA(C1_scan_code[1]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--C1_scan_code[0] is keyboard:inst|scan_code[0]
+--operation mode is normal
+
+C1_scan_code[0]_lut_out = C1_SHIFTIN[0];
+C1_scan_code[0] = DFFEA(C1_scan_code[0]_lut_out, kbd_clk, , , C1L52, , );
+
+
+--G1L07 is dec_kb:inst11|reduce_nor~850
+--operation mode is normal
+
+G1L07 = G1_hex_digit_3[5] & G1_hex_digit_3[6] & !G1_hex_digit_3[4] & !G1_hex_digit_3[2];
+
+
+--G1L17 is dec_kb:inst11|reduce_nor~852
+--operation mode is normal
+
+G1L17 = (G1_hex_digit_3[7] & !G1_hex_digit_3[0] & !G1_hex_digit_3[1] & !G1_hex_digit_3[3]) & CASCADE(G1L07);
+
+
+--G1L99 is dec_kb:inst11|reduce_or~2250
+--operation mode is normal
+
+G1L99 = G1L901 & !G1L421 # !G1L901 & !G1L211;
+
+
+--G1L001 is dec_kb:inst11|reduce_or~2251
+--operation mode is normal
+
+G1L001 = G1L321 # !G1L99 & G1_hex_digit[3] # G1L311;
+
+
+--G1L501 is dec_kb:inst11|reduce_or~2259
+--operation mode is normal
+
+G1L501 = (G1L411 & !G1L211 & !G1L811 # !G1L901 # !G1L411 & !G1L211 & !G1L811) & CASCADE(G1L001);
+
+
+--G1L48 is dec_kb:inst11|reduce_or~157
+--operation mode is normal
+
+G1L48 = G1L221 & !G1L321 & G1L121 $ G1L811;
+
+
+--G1L101 is dec_kb:inst11|reduce_or~2253
+--operation mode is normal
+
+G1L101 = G1_hex_digit[1] & G1_hex_digit[2] # G1L711 # !G1_hex_digit[1] & G1L021 & G1_hex_digit[2] # G1L711;
+
+
+--G1L201 is dec_kb:inst11|reduce_or~2254
+--operation mode is normal
+
+G1L201 = !G1L611 & G1L211 & G1L48 # !G1L211 & !G1L101;
+
+
+--G1L77 is dec_kb:inst11|reduce_or~103
+--operation mode is normal
+
+G1L77 = G1L221 & G1L121 # !G1L411 & G1L901 # !G1L221 & G1L121 & !G1L901 # !G1L411;
+
+
+--G1L301 is dec_kb:inst11|reduce_or~2255
+--operation mode is normal
+
+G1L301 = !G1L811 & G1L35 & !G1L111 # !G1L35 & !G1_hex_digit[6];
+
+
+--G1L601 is dec_kb:inst11|reduce_or~2260
+--operation mode is normal
+
+G1L601 = (G1L77 # G1L901 & !G1L321 # !G1L901 & !G1L301) & CASCADE(G1L201);
+
+
+--G1L37 is dec_kb:inst11|reduce_or~91
+--operation mode is normal
+
+G1L37 = G1L221 & G1L121 & !G1L811 & !G1L901 # !G1L221 & G1L121 $ G1L811;
+
+
+--G1L8 is dec_kb:inst11|bin_digit[2]~801
+--operation mode is normal
+
+G1L8 = G1L321 & G1L37 # !G1L321 & G1L47;
+
+
+--G1L11 is dec_kb:inst11|bin_digit[2]~808
+--operation mode is normal
+
+G1L11 = (G1L211 # !G1L7 # !G1L411 # !G1L8) & CASCADE(G1L21);
+
+
+--G1L401 is dec_kb:inst11|reduce_or~2257
+--operation mode is normal
+
+G1L401 = G1L121 # G1L811 # G1L221 & !G1L411;
+
+
+--G1L701 is dec_kb:inst11|reduce_or~2261
+--operation mode is normal
+
+G1L701 = (G1L121 & !G1L811 # !G1L121 & G1L321 & !G1L811 # !G1L221) & CASCADE(G1L401);
+
+
+--C1_SHIFTIN[4] is keyboard:inst|SHIFTIN[4]
+--operation mode is normal
+
+C1_SHIFTIN[4]_lut_out = C1_SHIFTIN[5];
+C1_SHIFTIN[4] = DFFEA(C1_SHIFTIN[4]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1_READ_CHAR is keyboard:inst|READ_CHAR
+--operation mode is normal
+
+C1_READ_CHAR_lut_out = !D1_pb_debounced & C1_READ_CHAR & !C1L01 # !C1_READ_CHAR & !kbd_data;
+C1_READ_CHAR = DFFEA(C1_READ_CHAR_lut_out, kbd_clk, , , , , );
+
+
+--C1_INCNT[3] is keyboard:inst|INCNT[3]
+--operation mode is normal
+
+C1_INCNT[3]_lut_out = !D1_pb_debounced & C1L7 # C1_INCNT[3] & !C1_READ_CHAR;
+C1_INCNT[3] = DFFEA(C1_INCNT[3]_lut_out, kbd_clk, , , , , );
+
+
+--C1_INCNT[2] is keyboard:inst|INCNT[2]
+--operation mode is normal
+
+C1_INCNT[2]_lut_out = C1L8 & !D1_pb_debounced;
+C1_INCNT[2] = DFFEA(C1_INCNT[2]_lut_out, kbd_clk, , , , , );
+
+
+--C1_INCNT[1] is keyboard:inst|INCNT[1]
+--operation mode is normal
+
+C1_INCNT[1]_lut_out = C1L9 & !D1_pb_debounced;
+C1_INCNT[1] = DFFEA(C1_INCNT[1]_lut_out, kbd_clk, , , , , );
+
+
+--C1_INCNT[0] is keyboard:inst|INCNT[0]
+--operation mode is normal
+
+C1_INCNT[0]_lut_out = !D1_pb_debounced & C1_INCNT[0] & !C1_READ_CHAR # !C1_INCNT[0] & !C1L01 & C1_READ_CHAR;
+C1_INCNT[0] = DFFEA(C1_INCNT[0]_lut_out, kbd_clk, , , , , );
+
+
+--C1L01 is keyboard:inst|LessThan~56
+--operation mode is normal
+
+C1L01 = C1_INCNT[3] & C1_INCNT[2] # C1_INCNT[1] # C1_INCNT[0];
+
+
+--C1L52 is keyboard:inst|scan_code[7]~41
+--operation mode is normal
+
+C1L52 = C1_READ_CHAR & C1L01 & !D1_pb_debounced;
+
+
+--C1_SHIFTIN[7] is keyboard:inst|SHIFTIN[7]
+--operation mode is normal
+
+C1_SHIFTIN[7]_lut_out = C1_SHIFTIN[8];
+C1_SHIFTIN[7] = DFFEA(C1_SHIFTIN[7]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1_SHIFTIN[6] is keyboard:inst|SHIFTIN[6]
+--operation mode is normal
+
+C1_SHIFTIN[6]_lut_out = C1_SHIFTIN[7];
+C1_SHIFTIN[6] = DFFEA(C1_SHIFTIN[6]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1_SHIFTIN[5] is keyboard:inst|SHIFTIN[5]
+--operation mode is normal
+
+C1_SHIFTIN[5]_lut_out = C1_SHIFTIN[6];
+C1_SHIFTIN[5] = DFFEA(C1_SHIFTIN[5]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1_SHIFTIN[3] is keyboard:inst|SHIFTIN[3]
+--operation mode is normal
+
+C1_SHIFTIN[3]_lut_out = C1_SHIFTIN[4];
+C1_SHIFTIN[3] = DFFEA(C1_SHIFTIN[3]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1_SHIFTIN[2] is keyboard:inst|SHIFTIN[2]
+--operation mode is normal
+
+C1_SHIFTIN[2]_lut_out = C1_SHIFTIN[3];
+C1_SHIFTIN[2] = DFFEA(C1_SHIFTIN[2]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1_SHIFTIN[1] is keyboard:inst|SHIFTIN[1]
+--operation mode is normal
+
+C1_SHIFTIN[1]_lut_out = C1_SHIFTIN[2];
+C1_SHIFTIN[1] = DFFEA(C1_SHIFTIN[1]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1_SHIFTIN[0] is keyboard:inst|SHIFTIN[0]
+--operation mode is normal
+
+C1_SHIFTIN[0]_lut_out = C1_SHIFTIN[1];
+C1_SHIFTIN[0] = DFFEA(C1_SHIFTIN[0]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--C1L41 is keyboard:inst|ready_set~105
+--operation mode is normal
+
+C1L41 = C1_READ_CHAR & C1L01 # !C1_READ_CHAR & kbd_data & C1_ready_set;
+
+
+--D1_pb_debounced is debounce:inst1|pb_debounced
+--operation mode is normal
+
+D1_pb_debounced_lut_out = D1_SHIFT_PB[2] # D1_SHIFT_PB[1] # D1_SHIFT_PB[0] # D1_SHIFT_PB[3];
+D1_pb_debounced = DFFEA(D1_pb_debounced_lut_out, E1_clock_100Hz, , , , , );
+
+
+--C1L63 is keyboard:inst|SHIFTIN[7]~31
+--operation mode is normal
+
+C1L63 = C1_READ_CHAR & !D1_pb_debounced & !C1L01;
+
+
+--C1L21 is keyboard:inst|READ_CHAR~82
+--operation mode is normal
+
+C1L21 = C1_READ_CHAR & !C1L01;
+
+
+--C1L1 is keyboard:inst|add~8
+--operation mode is normal
+
+C1L1 = C1_INCNT[1] & C1_INCNT[0];
+
+
+--C1L7 is keyboard:inst|INCNT~649
+--operation mode is normal
+
+C1L7 = C1L21 & C1_INCNT[3] $ (C1_INCNT[2] & C1L1);
+
+
+--C1L8 is keyboard:inst|INCNT~651
+--operation mode is normal
+
+C1L8 = C1_READ_CHAR & !C1L01 & C1_INCNT[2] $ C1L1 # !C1_READ_CHAR & C1_INCNT[2];
+
+
+--C1L9 is keyboard:inst|INCNT~653
+--operation mode is normal
+
+C1L9 = C1_READ_CHAR & !C1L01 & C1_INCNT[1] $ C1_INCNT[0] # !C1_READ_CHAR & C1_INCNT[1];
+
+
+--C1_SHIFTIN[8] is keyboard:inst|SHIFTIN[8]
+--operation mode is normal
+
+C1_SHIFTIN[8]_lut_out = kbd_data;
+C1_SHIFTIN[8] = DFFEA(C1_SHIFTIN[8]_lut_out, kbd_clk, , , C1L63, , );
+
+
+--G1L28 is dec_kb:inst11|reduce_or~153
+--operation mode is normal
+
+G1L28 = G1L221 & G1L121 & G1L411 & !G1L811 # !G1L221 & !G1L121 & !G1L411 & G1L811;
+
+
+--G1L9 is dec_kb:inst11|bin_digit[2]~805
+--operation mode is normal
+
+G1L9 = !G1L28 # !G1L211 # !G1L7 # !G1L5;
+
+
+--G1L01 is dec_kb:inst11|bin_digit[2]~806
+--operation mode is normal
+
+G1L01 = G1L7 & G1L35 & !G1L111 # !G1L35 & !G1_hex_digit[6];
+
+
+--G1L27 is dec_kb:inst11|reduce_or~89
+--operation mode is normal
+
+G1L27 = G1L221 & !G1L811 & G1L121 $ G1L901 # !G1L221 & !G1L121 & G1L811;
+
+
+--G1L21 is dec_kb:inst11|bin_digit[2]~809
+--operation mode is normal
+
+G1L21 = (G1L411 # !G1L27 # !G1L321 # !G1L01) & CASCADE(G1L9);
+
+
+--D1_SHIFT_PB[2] is debounce:inst1|SHIFT_PB[2]
+--operation mode is normal
+
+D1_SHIFT_PB[2]_lut_out = D1_SHIFT_PB[3];
+D1_SHIFT_PB[2] = DFFEA(D1_SHIFT_PB[2]_lut_out, E1_clock_100Hz, , , , , );
+
+
+--D1_SHIFT_PB[1] is debounce:inst1|SHIFT_PB[1]
+--operation mode is normal
+
+D1_SHIFT_PB[1]_lut_out = D1_SHIFT_PB[2];
+D1_SHIFT_PB[1] = DFFEA(D1_SHIFT_PB[1]_lut_out, E1_clock_100Hz, , , , , );
+
+
+--D1_SHIFT_PB[0] is debounce:inst1|SHIFT_PB[0]
+--operation mode is normal
+
+D1_SHIFT_PB[0]_lut_out = D1_SHIFT_PB[1];
+D1_SHIFT_PB[0] = DFFEA(D1_SHIFT_PB[0]_lut_out, E1_clock_100Hz, , , , , );
+
+
+--D1_SHIFT_PB[3] is debounce:inst1|SHIFT_PB[3]
+--operation mode is normal
+
+D1_SHIFT_PB[3]_lut_out = !PB[1];
+D1_SHIFT_PB[3] = DFFEA(D1_SHIFT_PB[3]_lut_out, E1_clock_100Hz, , , , , );
+
+
+--E1_clock_100Hz is clk_div:inst2|clock_100Hz
+--operation mode is normal
+
+E1_clock_100Hz_lut_out = E1_clock_100hz_int;
+E1_clock_100Hz = DFFEA(E1_clock_100Hz_lut_out, Clock_25Mhz, , , , , );
+
+
+--E1_clock_100hz_int is clk_div:inst2|clock_100hz_int
+--operation mode is normal
+
+E1_clock_100hz_int_lut_out = !E1_clock_100hz_int;
+E1_clock_100hz_int = DFFEA(E1_clock_100hz_int_lut_out, E1_clock_1Khz_int, , , E1L42, , );
+
+
+--E1_clock_1Khz_int is clk_div:inst2|clock_1Khz_int
+--operation mode is normal
+
+E1_clock_1Khz_int_lut_out = !E1_clock_1Khz_int;
+E1_clock_1Khz_int = DFFEA(E1_clock_1Khz_int_lut_out, E1_clock_10Khz_int, , , E1L52, , );
+
+
+--E1_count_100hz[1] is clk_div:inst2|count_100hz[1]
+--operation mode is normal
+
+E1_count_100hz[1]_lut_out = E1_count_100hz[1] $ E1_count_100hz[0];
+E1_count_100hz[1] = DFFEA(E1_count_100hz[1]_lut_out, E1_clock_1Khz_int, , , , , );
+
+
+--E1_count_100hz[0] is clk_div:inst2|count_100hz[0]
+--operation mode is normal
+
+E1_count_100hz[0]_lut_out = !E1_count_100hz[0] & E1_count_100hz[1] # !E1_count_100hz[2];
+E1_count_100hz[0] = DFFEA(E1_count_100hz[0]_lut_out, E1_clock_1Khz_int, , , , , );
+
+
+--E1_count_100hz[2] is clk_div:inst2|count_100hz[2]
+--operation mode is normal
+
+E1_count_100hz[2]_lut_out = E1_count_100hz[2] & E1_count_100hz[1] $ E1_count_100hz[0] # !E1_count_100hz[2] & E1_count_100hz[1] & E1_count_100hz[0];
+E1_count_100hz[2] = DFFEA(E1_count_100hz[2]_lut_out, E1_clock_1Khz_int, , , , , );
+
+
+--E1L42 is clk_div:inst2|reduce_or~58
+--operation mode is normal
+
+E1L42 = !E1_count_100hz[1] & !E1_count_100hz[0] & E1_count_100hz[2];
+
+
+--E1_clock_10Khz_int is clk_div:inst2|clock_10Khz_int
+--operation mode is normal
+
+E1_clock_10Khz_int_lut_out = !E1_clock_10Khz_int;
+E1_clock_10Khz_int = DFFEA(E1_clock_10Khz_int_lut_out, E1_clock_100Khz_int, , , E1L62, , );
+
+
+--E1_count_1Khz[1] is clk_div:inst2|count_1Khz[1]
+--operation mode is normal
+
+E1_count_1Khz[1]_lut_out = E1_count_1Khz[1] $ E1_count_1Khz[0];
+E1_count_1Khz[1] = DFFEA(E1_count_1Khz[1]_lut_out, E1_clock_10Khz_int, , , , , );
+
+
+--E1_count_1Khz[0] is clk_div:inst2|count_1Khz[0]
+--operation mode is normal
+
+E1_count_1Khz[0]_lut_out = !E1_count_1Khz[0] & E1_count_1Khz[1] # !E1_count_1Khz[2];
+E1_count_1Khz[0] = DFFEA(E1_count_1Khz[0]_lut_out, E1_clock_10Khz_int, , , , , );
+
+
+--E1_count_1Khz[2] is clk_div:inst2|count_1Khz[2]
+--operation mode is normal
+
+E1_count_1Khz[2]_lut_out = E1_count_1Khz[2] & E1_count_1Khz[1] $ E1_count_1Khz[0] # !E1_count_1Khz[2] & E1_count_1Khz[1] & E1_count_1Khz[0];
+E1_count_1Khz[2] = DFFEA(E1_count_1Khz[2]_lut_out, E1_clock_10Khz_int, , , , , );
+
+
+--E1L52 is clk_div:inst2|reduce_or~59
+--operation mode is normal
+
+E1L52 = !E1_count_1Khz[1] & !E1_count_1Khz[0] & E1_count_1Khz[2];
+
+
+--E1_clock_100Khz_int is clk_div:inst2|clock_100Khz_int
+--operation mode is normal
+
+E1_clock_100Khz_int_lut_out = !E1_clock_100Khz_int;
+E1_clock_100Khz_int = DFFEA(E1_clock_100Khz_int_lut_out, E1_clock_1Mhz_int, , , E1L72, , );
+
+
+--E1_count_10Khz[1] is clk_div:inst2|count_10Khz[1]
+--operation mode is normal
+
+E1_count_10Khz[1]_lut_out = E1_count_10Khz[1] $ E1_count_10Khz[0];
+E1_count_10Khz[1] = DFFEA(E1_count_10Khz[1]_lut_out, E1_clock_100Khz_int, , , , , );
+
+
+--E1_count_10Khz[0] is clk_div:inst2|count_10Khz[0]
+--operation mode is normal
+
+E1_count_10Khz[0]_lut_out = !E1_count_10Khz[0] & E1_count_10Khz[1] # !E1_count_10Khz[2];
+E1_count_10Khz[0] = DFFEA(E1_count_10Khz[0]_lut_out, E1_clock_100Khz_int, , , , , );
+
+
+--E1_count_10Khz[2] is clk_div:inst2|count_10Khz[2]
+--operation mode is normal
+
+E1_count_10Khz[2]_lut_out = E1_count_10Khz[2] & E1_count_10Khz[1] $ E1_count_10Khz[0] # !E1_count_10Khz[2] & E1_count_10Khz[1] & E1_count_10Khz[0];
+E1_count_10Khz[2] = DFFEA(E1_count_10Khz[2]_lut_out, E1_clock_100Khz_int, , , , , );
+
+
+--E1L62 is clk_div:inst2|reduce_or~60
+--operation mode is normal
+
+E1L62 = !E1_count_10Khz[1] & !E1_count_10Khz[0] & E1_count_10Khz[2];
+
+
+--E1_clock_1Mhz_int is clk_div:inst2|clock_1Mhz_int
+--operation mode is normal
+
+E1_clock_1Mhz_int_lut_out = J1_q[4] # J1_q[3] & J1_q[2];
+E1_clock_1Mhz_int = DFFEA(E1_clock_1Mhz_int_lut_out, Clock_25Mhz, , , , , );
+
+
+--E1_count_100Khz[1] is clk_div:inst2|count_100Khz[1]
+--operation mode is normal
+
+E1_count_100Khz[1]_lut_out = E1_count_100Khz[1] $ E1_count_100Khz[0];
+E1_count_100Khz[1] = DFFEA(E1_count_100Khz[1]_lut_out, E1_clock_1Mhz_int, , , , , );
+
+
+--E1_count_100Khz[0] is clk_div:inst2|count_100Khz[0]
+--operation mode is normal
+
+E1_count_100Khz[0]_lut_out = !E1_count_100Khz[0] & E1_count_100Khz[1] # !E1_count_100Khz[2];
+E1_count_100Khz[0] = DFFEA(E1_count_100Khz[0]_lut_out, E1_clock_1Mhz_int, , , , , );
+
+
+--E1_count_100Khz[2] is clk_div:inst2|count_100Khz[2]
+--operation mode is normal
+
+E1_count_100Khz[2]_lut_out = E1_count_100Khz[2] & E1_count_100Khz[1] $ E1_count_100Khz[0] # !E1_count_100Khz[2] & E1_count_100Khz[1] & E1_count_100Khz[0];
+E1_count_100Khz[2] = DFFEA(E1_count_100Khz[2]_lut_out, E1_clock_1Mhz_int, , , , , );
+
+
+--E1L72 is clk_div:inst2|reduce_or~61
+--operation mode is normal
+
+E1L72 = !E1_count_100Khz[1] & !E1_count_100Khz[0] & E1_count_100Khz[2];
+
+
+--J1_q[3] is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[3]
+--operation mode is clrb_cntr
+
+J1_q[3]_lut_out = (J1_q[3] $ J1L7) & E1L32;
+J1_q[3] = DFFEA(J1_q[3]_lut_out, Clock_25Mhz, , , , , );
+
+--J1L9 is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|counter_cell[3]~COUT
+--operation mode is clrb_cntr
+
+J1L9 = CARRY(J1_q[3] & J1L7);
+
+
+--J1_q[2] is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[2]
+--operation mode is clrb_cntr
+
+J1_q[2]_lut_out = (J1_q[2] $ J1L5) & E1L32;
+J1_q[2] = DFFEA(J1_q[2]_lut_out, Clock_25Mhz, , , , , );
+
+--J1L7 is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|counter_cell[2]~COUT
+--operation mode is clrb_cntr
+
+J1L7 = CARRY(J1_q[2] & J1L5);
+
+
+--J1_q[4] is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[4]
+--operation mode is clrb_cntr
+
+J1_q[4]_lut_out = (J1_q[4] $ J1L9) & E1L32;
+J1_q[4] = DFFEA(J1_q[4]_lut_out, Clock_25Mhz, , , , , );
+
+
+--E1L32 is clk_div:inst2|LessThan~39
+--operation mode is normal
+
+E1L32 = !J1_q[3] # !J1_q[4];
+
+
+--J1_q[1] is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[1]
+--operation mode is clrb_cntr
+
+J1_q[1]_lut_out = (J1_q[1] $ J1L3) & E1L32;
+J1_q[1] = DFFEA(J1_q[1]_lut_out, Clock_25Mhz, , , , , );
+
+--J1L5 is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|counter_cell[1]~COUT
+--operation mode is clrb_cntr
+
+J1L5 = CARRY(J1_q[1] & J1L3);
+
+
+--J1_q[0] is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|q[0]
+--operation mode is clrb_cntr
+
+J1_q[0]_lut_out = (!J1_q[0]) & E1L32;
+J1_q[0] = DFFEA(J1_q[0]_lut_out, Clock_25Mhz, , , , , );
+
+--J1L3 is clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter|counter_cell[0]~COUT
+--operation mode is clrb_cntr
+
+J1L3 = CARRY(J1_q[0]);
+
+
+--C1L51 is keyboard:inst|ready_set~107
+--operation mode is normal
+
+C1L51 = !D1_pb_debounced;
+
+
+--PB[2] is PB[2]
+--operation mode is input
+
+PB[2] = INPUT();
+
+
+--kbd_clk is kbd_clk
+--operation mode is input
+
+kbd_clk = INPUT();
+
+
+--kbd_data is kbd_data
+--operation mode is input
+
+kbd_data = INPUT();
+
+
+--PB[1] is PB[1]
+--operation mode is input
+
+PB[1] = INPUT();
+
+
+--Clock_25Mhz is Clock_25Mhz
+--operation mode is input
+
+Clock_25Mhz = INPUT();
+
+
+--LSD_SEG_A is LSD_SEG_A
+--operation mode is output
+
+LSD_SEG_A = OUTPUT(B1L7);
+
+
+--LSD_SEG_B is LSD_SEG_B
+--operation mode is output
+
+LSD_SEG_B = OUTPUT(B1L6);
+
+
+--LSD_SEG_C is LSD_SEG_C
+--operation mode is output
+
+LSD_SEG_C = OUTPUT(B1L5);
+
+
+--LSD_SEG_D is LSD_SEG_D
+--operation mode is output
+
+LSD_SEG_D = OUTPUT(B1L4);
+
+
+--LSD_SEG_E is LSD_SEG_E
+--operation mode is output
+
+LSD_SEG_E = OUTPUT(B1L3);
+
+
+--LSD_SEG_F is LSD_SEG_F
+--operation mode is output
+
+LSD_SEG_F = OUTPUT(B1L2);
+
+
+--LSD_SEG_G is LSD_SEG_G
+--operation mode is output
+
+LSD_SEG_G = OUTPUT(!B1L1);
+
+
+--MSD_SEG_A is MSD_SEG_A
+--operation mode is output
+
+MSD_SEG_A = OUTPUT(!B2L6);
+
+
+--MSD_SEG_B is MSD_SEG_B
+--operation mode is output
+
+MSD_SEG_B = OUTPUT(!B2L5);
+
+
+--MSD_SEG_C is MSD_SEG_C
+--operation mode is output
+
+MSD_SEG_C = OUTPUT(GND);
+
+
+--MSD_SEG_D is MSD_SEG_D
+--operation mode is output
+
+MSD_SEG_D = OUTPUT(!B2L4);
+
+
+--MSD_SEG_E is MSD_SEG_E
+--operation mode is output
+
+MSD_SEG_E = OUTPUT(B2L3);
+
+
+--MSD_SEG_F is MSD_SEG_F
+--operation mode is output
+
+MSD_SEG_F = OUTPUT(B2L2);
+
+
+--MSD_SEG_G is MSD_SEG_G
+--operation mode is output
+
+MSD_SEG_G = OUTPUT(B2L1);
+
+
+--LSD_SEG_DP is LSD_SEG_DP
+--operation mode is output
+
+LSD_SEG_DP = OUTPUT(inst6);
+
+
+--MSD_SEG_DP is MSD_SEG_DP
+--operation mode is output
+
+MSD_SEG_DP = OUTPUT(inst4);
+
+

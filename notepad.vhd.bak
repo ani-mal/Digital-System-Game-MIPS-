@@ -1,0 +1,1315 @@
+-- *************************************************
+-- Crislâine Machado da Silva
+-- nº 6878908
+-- Habner Bonifácio Gerotto
+-- nº 6793218
+
+-- JOGO PONG 
+-- INSTRUÇÕES:
+-- As teclas W e S movimentam as barras laterais
+-- para cima e para baixo.
+-- As teclas A e D movimentam as barras superior 
+-- e inferior para esquerda e direita.
+
+-- Enquanto joga um contador mostra o tempo que 
+-- o jogador leva sem perder, se perder o contador
+-- zera e o jogo é iniciado de novo.
+-- *************************************************
+library IEEE;
+use  IEEE.STD_LOGIC_1164.all;
+use  IEEE.STD_LOGIC_ARITH.all;
+use  IEEE.STD_LOGIC_UNSIGNED.all;
+
+ENTITY notepad IS
+
+	PORT(
+		clk, reset  : IN	STD_LOGIC;
+		video		: OUT	STD_LOGIC_VECTOR(15 DOWNTO 0);  -- 2 bits para a cor 6 bits para o caracter 8 bits de endereco (direita para esquerda)
+		key			: IN 	STD_LOGIC_VECTOR(7 DOWNTO 0);	-- teclado
+		video_set	: IN 	STD_LOGIC;
+		video_ready	: out 	STD_LOGIC
+		);
+
+END  notepad ;
+
+ARCHITECTURE a OF notepad IS
+	
+	SIGNAL videoflag   : STD_LOGIC;
+	-- Escreve na tela
+	SIGNAL VIDEOE      : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	-- Contador de tempo
+	SIGNAL TEMPO1POS   : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL TEMPO1POSA  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL TEMPO1CHAR  : STD_LOGIC_VECTOR(5 DOWNTO 0);
+	SIGNAL TEMPO1COR   : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	-- Contador de tempo
+	SIGNAL TEMPO2POS   : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL TEMPO2POSA  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL TEMPO2CHAR  : STD_LOGIC_VECTOR(5 DOWNTO 0);
+	SIGNAL TEMPO2COR   : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	-- Barra Esquerda da Tela
+	SIGNAL BARRA1POS   : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA1POSA  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA1CHAR  : STD_LOGIC_VECTOR(5 DOWNTO 0);
+	SIGNAL BARRA1COR   : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	-- Barra Direita da Tela
+	SIGNAL BARRA2POS   : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA2POSA  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA2CHAR  : STD_LOGIC_VECTOR(5 DOWNTO 0);
+	SIGNAL BARRA2COR   : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	-- Barra Cima da Tela
+	SIGNAL BARRA3POS   : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA3POSA  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA3CHAR  : STD_LOGIC_VECTOR(5 DOWNTO 0);
+	SIGNAL BARRA3COR   : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	-- Barra Baixo da Tela
+	SIGNAL BARRA4POS   : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA4POSA  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BARRA4CHAR  : STD_LOGIC_VECTOR(5 DOWNTO 0);
+	SIGNAL BARRA4COR   : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	-- Bolinha
+	SIGNAL BOLAPOS     : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BOLAPOSA    : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL BOLACHAR    : STD_LOGIC_VECTOR(5 DOWNTO 0);
+	SIGNAL BOLACOR     : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	--Delay das Barras
+	SIGNAL DELAY1      : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	--Delay da Bolinha
+	SIGNAL DELAY2      : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	--Delay do tempo
+	--Delay de 1000
+	SIGNAL DELAY3      : STD_LOGIC_VECTOR(11 DOWNTO 0);  
+	--Estado do tempo
+	SIGNAL TEMPOESTADO : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	--Estado da Barra
+	SIGNAL BARRAESTADO : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	--Estados da Bolinha
+	SIGNAL BOLAESTADO  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL B_ESTADO    : STD_LOGIC_VECTOR(7 DOWNTO 0);
+BEGIN
+
+-- Movimenta BARRAS
+PROCESS (clk, reset)
+	
+	BEGIN
+		
+	IF RESET = '1' THEN
+		BARRA1CHAR <= "111111";
+		BARRA1COR <= "10"; -- 10 verde
+		BARRA1POS <= x"64";
+		BARRA1POSA <= x"00";
+		
+		BARRA2CHAR <= "111111";
+		BARRA2COR <= "10"; 
+		BARRA2POS <= x"77";
+		BARRA2POSA <= x"00";
+		
+		BARRA3CHAR <= "111101";
+		BARRA3COR <= "10"; 
+		BARRA3POS <= x"32";
+		BARRA3POSA <= x"00";
+		
+		BARRA4CHAR <= "111101";
+		BARRA4COR <= "10"; 
+		BARRA4POS <= x"E6";
+		BARRA4POSA <= x"00";
+		
+		DELAY1 <= x"00";
+		BARRAESTADO <= x"00";
+		
+	ELSIF (clk'event) and (clk = '1') THEN
+
+		CASE BARRAESTADO IS
+			WHEN x"00" => -- Estado movimenta Barras
+			
+				CASE key IS
+					WHEN x"53" => -- (S) BAIXO
+						IF (BARRA1POS + x"14") <= 220 THEN
+							BARRA1POSA <= BARRA1POS;
+							BARRA1POS <= BARRA1POS + x"14";
+							BARRA2POSA <= BARRA2POS;
+							BARRA2POS <= BARRA2POS + x"14";
+							BARRAESTADO <= x"01";
+						END IF;
+					WHEN x"57" => -- (W) CIMA
+						IF (BARRA1POS - x"14") > 40 THEN
+							BARRA1POSA <= BARRA1POS;
+							BARRA1POS <= BARRA1POS - x"14";
+							BARRA2POSA <= BARRA2POS;
+							BARRA2POS <= BARRA2POS - x"14";
+							BARRAESTADO <= x"01";
+						END IF;
+					WHEN x"41" => -- (A) ESQUERDA
+						IF (BARRA3POS - x"01") > 40 THEN
+							BARRA3POSA <= BARRA3POS;
+							BARRA3POS <= BARRA3POS - x"01";
+							BARRA4POSA <= BARRA4POS;
+							BARRA4POS <= BARRA4POS - x"01";
+							BARRAESTADO <= x"01";
+						END IF;
+					WHEN x"44" => -- (D) DIREITA
+						IF (BARRA3POS + x"01") < 59 THEN
+							BARRA3POSA <= BARRA3POS;
+							BARRA3POS <= BARRA3POS + x"01";
+							BARRA4POSA <= BARRA4POS;
+							BARRA4POS <= BARRA4POS + x"01";
+							BARRAESTADO <= x"01";
+						END IF;
+					WHEN OTHERS =>
+				END CASE;
+			
+			WHEN x"01" => -- Delay para movimentar Barras
+			 
+				IF DELAY1 >= x"64" THEN
+					DELAY1 <= x"00";
+					BARRAESTADO <= x"00";
+				ELSE
+					DELAY1 <= DELAY1 + x"01";
+				END IF;
+				
+			WHEN OTHERS =>
+		END CASE;
+	END IF;
+
+END PROCESS;
+
+-- Bolinha
+PROCESS (clk, reset)
+
+BEGIN
+		
+	IF RESET = '1' THEN
+		BOLACHAR <= "111110";
+		BOLACOR <= "00"; -- 00 Branco
+		BOLAPOS <= x"6E";
+		BOLAPOSA <= x"00";
+		
+		DELAY2 <= x"00";
+		BOLAESTADO <= x"00";
+		B_ESTADO <= x"00";
+		
+	ELSIF (clk'event) and (clk = '1') THEN
+		CASE BOLAESTADO IS
+			WHEN x"00" =>
+				CASE B_ESTADO iS
+					WHEN x"00" =>
+						-- Inicia andando para cima e direita
+						IF ((BOLAPOS - x"13") = BARRA3POS OR (BOLAPOS - x"14") = BARRA3POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS + x"15";
+							B_ESTADO <= x"02";
+						ELSIF ((BOLAPOS - x"13") = BARRA2POS OR (BOLAPOS + x"01") = BARRA2POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS - x"15";
+							B_ESTADO <= x"03";
+						-- Perdeu - Condições se bateu em cima ou na parede direita 
+						ELSIF (BOLAPOS < 59) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 59) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 79) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 99) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 119) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 139) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 159) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 179) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 199) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 219) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 239) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSE B_ESTADO <= x"01";
+						END IF;
+					WHEN x"01" => -- Decrementa
+						BOLAPOSA <= BOLAPOS;
+						BOLAPOS <= BOLAPOS - x"13";
+						B_ESTADO <= x"00";
+					WHEN x"02" => -- Para baixo e direita
+						IF ((BOLAPOS + x"15") = BARRA2POS OR (BOLAPOS + x"01") = BARRA2POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS + x"13";
+							B_ESTADO <= x"06";
+						ELSIF ((BOLAPOS + x"15") = BARRA4POS OR (BOLAPOS + x"14") = BARRA4POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS - x"13";
+							B_ESTADO <= x"00";
+						-- Perdeu - Condições se bateu em baixo ou na parede direita
+						ELSIF (BOLAPOS >= 220) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 39) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 59) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 79) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 99) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 119) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 139) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 159) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 179) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 199) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 219) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 239) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSE B_ESTADO <= x"03";
+						END IF;
+					WHEN x"03" => -- Incrementa
+						BOLAPOSA <= BOLAPOS;
+						BOLAPOS <= BOLAPOS + x"15";
+						B_ESTADO <= x"02";
+					WHEN x"04" => -- Para cima e esquerda
+						IF ((BOLAPOS - x"15") = BARRA1POS OR (BOLAPOS - x"01") = BARRA1POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS - x"13";
+							B_ESTADO <= x"00";
+						ELSIF ((BOLAPOS - x"15") = BARRA3POS OR (BOLAPOS - x"14") = BARRA3POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS + x"13";
+							B_ESTADO <= x"06";
+						-- Perdeu - Condições se bateu em cima ou na parede esquerda
+						ELSIF (BOLAPOS < 60) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 60) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 80) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 100) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 120) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 140) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 160) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 180) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 200) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 220) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSE B_ESTADO <= x"05";
+						END IF;
+					WHEN x"05" => -- Decrementa
+						BOLAPOSA <= BOLAPOS;
+						BOLAPOS <= BOLAPOS - x"15";
+						B_ESTADO <= x"04";
+					WHEN x"06" => -- Para baixo e esquerda
+						IF ((BOLAPOS + x"13") = BARRA1POS OR (BOLAPOS - x"01") = BARRA1POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS + x"15";
+							B_ESTADO <= x"02";
+						ELSIF ((BOLAPOS + x"13") = BARRA4POS OR (BOLAPOS + x"14") = BARRA4POS) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= BOLAPOS - x"15";
+							B_ESTADO <= x"04";
+						-- Perdeu - Condições se bateu em baixo ou na parede esquerda                     
+						ELSIF (BOLAPOS > 220) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 20) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 40) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 60) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 80) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 100) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 120) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 140) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 160) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 180) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 200) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSIF (BOLAPOS = 220) THEN
+							BOLAPOSA <= BOLAPOS;
+							BOLAPOS <= x"6E";
+							B_ESTADO <= x"00";
+						ELSE B_ESTADO <= x"07";
+						END IF;
+					WHEN x"07" => -- Incrementa
+						BOLAPOSA <= BOLAPOS;
+						BOLAPOS <= BOLAPOS + x"13";
+						B_ESTADO <= x"06";
+					WHEN OTHERS =>
+				END CASE;
+				BOLAESTADO <= x"01";
+				
+			WHEN x"01" =>
+			
+				IF DELAY2 >= x"FA" THEN 
+					DELAY2 <= x"00";
+					BOLAESTADO <= x"00";
+				ELSE
+					DELAY2 <= DELAY2 + x"01";
+				END IF;
+				
+			WHEN OTHERS =>
+		END CASE;
+	END IF;
+	
+END PROCESS;
+
+-- Conta tempo
+PROCESS (clk, reset)
+	
+	BEGIN
+		
+	IF RESET = '1' THEN
+		TEMPO1CHAR <= "110000"; -- Tempo dezena 
+		TEMPO1COR <= "11"; 
+		TEMPO1POS <= x"01";
+		TEMPO1POSA <= x"00";
+		
+		TEMPO2CHAR <= "110000"; -- Tempo unidade
+		TEMPO2COR <= "11"; 
+		TEMPO2POS <= x"02";
+		TEMPO2POSA <= x"00";
+		
+		DELAY3 <= x"000";
+		TEMPOESTADO <= x"00";
+		
+	ELSIF (clk'event) and (clk = '1') THEN
+		CASE TEMPOESTADO IS
+			WHEN x"00" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110000"; -- 0
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"01";
+			WHEN x"01" =>
+				IF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"02";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"02" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110001"; -- 1
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"03";
+			WHEN x"03" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"04";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"04" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110010"; -- 2
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"05";
+			WHEN x"05" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"06";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"06" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110011"; -- 3
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"07";
+			WHEN x"07" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"08";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"08" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110100"; -- 4
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"09";
+			WHEN x"09" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"0A";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"0A" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110101"; -- 5
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"0B";
+			WHEN x"0B" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"0C";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"0C" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0 
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110110"; -- 6
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"0D";
+			WHEN x"0D" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"0E";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"0E" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110111"; -- 7
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"0F";
+			WHEN x"0F" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"10";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"10" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0 
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "111000"; -- 8
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"11";
+			WHEN x"11" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"12";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"12" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110000"; -- 0
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "111001"; -- 9
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"13";
+			WHEN x"13" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"14";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"14" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110000"; -- 0
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"15";
+			WHEN x"15" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"16";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"16" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110001"; -- 1
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"17";
+			WHEN x"17" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"18";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"18" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110010"; -- 2
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"19";
+			WHEN x"19" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"1A";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"1A" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110011"; -- 3
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"1B";
+			WHEN x"1B" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"1C";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"1C" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110100"; -- 4
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"1D";
+			WHEN x"1D" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"1E";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"1E" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110101"; -- 5
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"1F";
+			WHEN x"1F" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"20";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"20" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110110"; -- 6
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"21";
+			WHEN x"21" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"22";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"22" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110111"; -- 7
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"23";
+			WHEN x"23" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"24";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"24" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "111000"; -- 8
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"25";
+			WHEN x"25" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"26";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"26" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110001"; -- 1
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "111001"; -- 9
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"27";
+			WHEN x"27" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"28";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"28" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110000"; -- 0
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"29";
+			WHEN x"29" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"2A";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"2A" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110001"; -- 1
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"2B";
+			WHEN x"2B" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"2C";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"2C" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2 
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110010"; -- 2
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"2D";
+			WHEN x"2D" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"2E";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"2E" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110011"; -- 3
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"2F";
+			WHEN x"2F" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"30";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"30" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2 
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110100"; -- 4
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"31";
+			WHEN x"31" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"32";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"32" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110101"; -- 5
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"33";
+			WHEN x"33" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"34";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"34" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110110"; -- 6
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"35";
+			WHEN x"35" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"36";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"36" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110111"; -- 7
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"37";
+			WHEN x"37" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"38";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"38" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "111000"; -- 8
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"39";
+			WHEN x"39" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"3A";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"3A" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110010"; -- 2
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "111001"; -- 9
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"3B";
+			WHEN x"3B" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"3C";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+			WHEN x"3C" =>
+				TEMPO1POSA <= TEMPO1POS;
+				TEMPO1CHAR <= "110011"; -- 3
+				TEMPO1COR <= "11"; -- 11 azul
+				TEMPO1POS <= x"01";
+						
+				TEMPO2POSA <= TEMPO2POS;
+				TEMPO2CHAR <= "110000"; -- 0
+				TEMPO2COR <= "11"; 
+				TEMPO2POS <= x"02";
+				
+				TEMPOESTADO <= x"3D";
+			WHEN x"3D" =>
+				IF (BOLAPOS = x"6E" AND B_ESTADO = x"00") THEN 
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSIF DELAY3 >= x"3E8" THEN
+					DELAY3 <= x"000";
+					TEMPOESTADO <= x"00";
+				ELSE
+					DELAY3 <= DELAY3 + x"001";
+				END IF;
+
+			WHEN OTHERS =>
+		END CASE;
+		
+	END IF;
+
+END PROCESS;
+
+-- Escreve na Tela
+PROCESS (clk, reset)
+
+BEGIN
+	IF RESET = '1' THEN
+		VIDEOE <= x"00";
+		videoflag <= '0';
+	ELSIF (clk'event) and (clk = '1') THEN
+		CASE VIDEOE IS
+			WHEN x"00" => -- Desenha Barra Esquerda
+				video(15 downto 14) <= BARRA1COR; -- Cor
+				video(13 downto 8) <= BARRA1CHAR; -- Caractere
+				video(7 downto 0) <= BARRA1POS; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"01";
+			WHEN x"01" =>
+				videoflag <= '0';
+				VIDEOE <= x"02";
+			WHEN x"02" => -- Desenha Barra Direita
+				video(15 downto 14) <= BARRA2COR; -- Cor
+				video(13 downto 8) <= BARRA2CHAR; -- Caractere
+				video(7 downto 0) <= BARRA2POS; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"03";
+			WHEN x"03" =>
+				videoflag <= '0';
+				VIDEOE <= x"04";
+			WHEN x"04" => -- Desenha Barra Cima
+				video(15 downto 14) <= BARRA3COR; -- Cor
+				video(13 downto 8) <= BARRA3CHAR; -- Caractere
+				video(7 downto 0) <= BARRA3POS; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"05";
+			WHEN x"05" =>
+				videoflag <= '0';
+				VIDEOE <= x"06";
+			WHEN x"06" => -- Desenha Barra Baixo
+				video(15 downto 14) <= BARRA4COR; -- Cor
+				video(13 downto 8) <= BARRA4CHAR; -- Caractere
+				video(7 downto 0) <= BARRA4POS; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"07";
+			WHEN x"07" =>
+				videoflag <= '0';
+				VIDEOE <= x"08";
+			WHEN x"08" => -- Desenha Bolinha
+				video(15 downto 14) <= BOLACOR; -- Cor
+				video(13 downto 8) <= BOLACHAR; -- Caractere
+				video(7 downto 0) <= BOLAPOS; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"09";
+			WHEN x"09" =>
+				videoflag <= '0';
+				VIDEOE <= x"0A";
+			WHEN x"0A" => -- Desenha o Tempo dezena
+				video(15 downto 14) <= TEMPO1COR; -- Cor
+				video(13 downto 8) <= TEMPO1CHAR; -- Caractere
+				video(7 downto 0) <= TEMPO1POS; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"0B";
+			WHEN x"0B" =>
+				videoflag <= '0';
+				VIDEOE <= x"0C";
+			WHEN x"0C" => -- Desenha o Tempo unidade
+				video(15 downto 14) <= TEMPO2COR; -- Cor
+				video(13 downto 8) <= TEMPO2CHAR; -- Caractere
+				video(7 downto 0) <= TEMPO2POS; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"0D";
+			WHEN x"0D" =>
+				videoflag <= '0';
+				VIDEOE <= x"0E";
+			WHEN x"0E" => -- Apaga Barra Esquerda
+				video(15 downto 14) <= "00"; -- Cor
+				video(13 downto 8) <= "000000"; -- Caractere
+				video(7 downto 0) <= BARRA1POSA; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"0F";
+			WHEN x"0F" =>
+				videoflag <= '0';
+				VIDEOE <= x"10";
+			WHEN x"10" => -- Apaga Barra Direita
+				video(15 downto 14) <= "00"; -- Cor
+				video(13 downto 8) <= "000000"; -- Caractere
+				video(7 downto 0) <= BARRA2POSA; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"11";
+			WHEN x"11" =>
+				videoflag <= '0';
+				VIDEOE <= x"12";
+			WHEN x"12" => -- Apaga Barra Cima
+				video(15 downto 14) <= "00"; -- Cor
+				video(13 downto 8) <= "000000"; -- Caractere
+				video(7 downto 0) <= BARRA3POSA; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"13";
+			WHEN x"13" =>
+				videoflag <= '0';
+				VIDEOE <= x"14";
+			WHEN x"14" => -- Apaga Barra Baixo
+				video(15 downto 14) <= "00"; -- Cor
+				video(13 downto 8) <= "000000"; -- Caractere
+				video(7 downto 0) <= BARRA4POSA; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"15";
+			WHEN x"15" =>
+				videoflag <= '0';
+				VIDEOE <= x"16";
+			WHEN x"16" => -- Apaga Bolinha
+				video(15 downto 14) <= "00"; -- Cor
+				video(13 downto 8) <= "000000"; -- Caractere
+				video(7 downto 0) <= BOLAPOSA; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"17";
+			WHEN x"17" =>
+				videoflag <= '0';
+				VIDEOE <= x"18";
+			WHEN x"18" => -- Apaga Tempo dezena
+				video(15 downto 14) <= "00"; -- Cor
+				video(13 downto 8) <= "000000"; -- Caractere
+				video(7 downto 0) <= TEMPO1POSA; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"19";
+			WHEN x"19" =>
+				videoflag <= '0';
+				VIDEOE <= x"20";
+			WHEN x"20" => -- Apaga Tempo unidade
+				video(15 downto 14) <= "00"; -- Cor
+				video(13 downto 8) <= "000000"; -- Caractere
+				video(7 downto 0) <= TEMPO2POSA; -- Posicao
+				videoflag <= '1';
+				VIDEOE <= x"21";
+			WHEN x"21" =>
+				videoflag <= '0';
+				VIDEOE <= x"00";
+			WHEN OTHERS =>
+				videoflag <= '0';
+				VIDEOE <= x"00";
+		END CASE;
+	END IF;
+END PROCESS;
+	
+PROCESS (videoflag, video_set)
+BEGIN
+  IF video_set = '1' THEN video_ready <= '0';
+  ELSIF videoflag'EVENT and videoflag = '1' THEN video_ready <= '1';
+  END IF;
+END PROCESS;
+
+END a;

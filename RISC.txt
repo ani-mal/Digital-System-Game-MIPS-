@@ -1,0 +1,387 @@
+library IEEE;
+use  IEEE.STD_LOGIC_1164.all;
+use  IEEE.STD_LOGIC_ARITH.all;
+use  IEEE.STD_LOGIC_UNSIGNED.all;
+
+ENTITY cpu IS
+	PORT(clk, reset	: IN	STD_LOGIC;
+		IR1			: in 	std_logic_VECTOR(15 downto 0);
+		romaddress 	: out 	std_logic_VECTOR(15 downto 0);
+		ramin 		: in 	std_logic_VECTOR(15 downto 0);		
+		ramout 		: out 	std_logic_VECTOR(15 downto 0);				
+		ramaddress 	: out 	std_logic_VECTOR(15 downto 0);	
+		ramwrite	: OUT	STD_LOGIC;			
+		video		: out	std_logic_VECTOR(15 downto 0);
+		key			: in 	std_logic_VECTOR(7 downto 0);	
+		video_set	: in 	std_logic;
+		Ponto		: out 	std_logic_VECTOR(1 downto 0);	
+		DISPLAY1	: out 	std_logic_VECTOR(3 downto 0);
+		DISPLAY2	: out 	std_logic_VECTOR(3 downto 0);
+		video_ready	: out 	STD_LOGIC);
+END cpu;
+
+ARCHITECTURE a OF cpu IS
+	TYPE	STATES IS (fetch, decode, exec);
+	TYPE	REGISTERS IS ARRAY (0 to 15) OF STD_LOGIC_VECTOR(15 downto 0);
+-- Memory Instructions:	
+	CONSTANT LOAD 		: STD_LOGIC_VECTOR (5 downto 0) := "110000"; -- Rx <- M[Ry]
+	CONSTANT STORE 		: STD_LOGIC_VECTOR (5 downto 0) := "110001"; -- M[m] <- Rx
+	CONSTANT LOADCTE 	: STD_LOGIC_VECTOR (5 downto 0) := "110010"; -- Rx <- Const
+	CONSTANT MOV	 	: STD_LOGIC_VECTOR (5 downto 0) := "110011"; -- Rx <- Ry
+	CONSTANT OUTCHAR	: STD_LOGIC_VECTOR (5 downto 0) := "111000"; -- Video[Ry] <- Char(Rx)
+	CONSTANT INCHAR		: STD_LOGIC_VECTOR (5 downto 0) := "111001"; -- Rx <- KeyPressed	
+
+-- Aritmethic Instructions:	
+	CONSTANT ADD 		: STD_LOGIC_VECTOR (5 downto 0) := "100000"; -- Rx <- Rx + Ry
+	CONSTANT SUB 		: STD_LOGIC_VECTOR (5 downto 0) := "100001"; -- Rx <- Rx - Ry
+	CONSTANT MULT	 	: STD_LOGIC_VECTOR (5 downto 0) := "100010"; -- Rx <- Rx * Ry
+--	CONSTANT DIV	 	: STD_LOGIC_VECTOR (5 downto 0) := "100011";
+--	CONSTANT MODINT	 	: STD_LOGIC_VECTOR (5 downto 0) := "100100";
+	CONSTANT INC	 	: STD_LOGIC_VECTOR (5 downto 0) := "100101"; -- Rx <- Rx + 1
+	CONSTANT DEC	 	: STD_LOGIC_VECTOR (5 downto 0) := "100110"; -- Rx <- Rx - 1
+
+-- Logic Instructions:	
+	CONSTANT SHIFT 		: STD_LOGIC_VECTOR (5 downto 0) := "010000"; -- Shift/Rotate Rx-- b0=dir; b1=fill; b2=shif/rotate
+	CONSTANT COMP 		: STD_LOGIC_VECTOR (5 downto 0) := "010001"; -- Compare Rx and Ry
+	CONSTANT LAND 		: STD_LOGIC_VECTOR (5 downto 0) := "010010"; -- Rx <- Rx AND Ry
+	CONSTANT LOR 		: STD_LOGIC_VECTOR (5 downto 0) := "010011"; -- Rx <- Rx OR Ry
+	CONSTANT LXOR	 	: STD_LOGIC_VECTOR (5 downto 0) := "010100"; -- Rx <- Rx XOR Ry
+
+-- FLOW CONTROL Instructions:	
+	CONSTANT BRA 		: STD_LOGIC_VECTOR (5 downto 0) := "000001"; -- PC <- PC +- 7bit Const : b0,b1= 00-unconditional; 01-equal; 10-greater; 11-lesser
+	CONSTANT JMP 		: STD_LOGIC_VECTOR (5 downto 0) := "000010"; --	PC <- 16bit Const : b0,b1= 00-unconditional; 01-equal; 10-greater; 11-lesser
+	CONSTANT CALL	 	: STD_LOGIC_VECTOR (5 downto 0) := "000011"; -- M[SP] <- PC | SP ++ | PC <- 16bit Const
+	CONSTANT RET	 	: STD_LOGIC_VECTOR (5 downto 0) := "000100"; -- SP -- | PC <- M[SP]
+
+-- Other Instructions:	
+	CONSTANT NOP	 	: STD_LOGIC_VECTOR (5 downto 0) := "000000"; -- Do Nothing
+	CONSTANT HALT		: STD_LOGIC_VECTOR (5 downto 0) := "001111"; -- Stop Here
+
+--Register Declaration:
+	SIGNAL	PC		:STD_LOGIC_VECTOR(15 downto 0);	-- Program Counter
+	SIGNAL	IR2		:STD_LOGIC_VECTOR(15 downto 0);	-- Instruction Register
+	SIGNAL	SP		:STD_LOGIC_VECTOR(15 downto 0);	-- Stack Pointer
+--	SIGNAL	MP		:STD_LOGIC_VECTOR(15 downto 0);	-- Memory Pointer
+	SIGNAL	FL		:STD_LOGIC_VECTOR(15 downto 0);	-- Flag Register: <...|stackunderflow|stackoverflow|carry|zero|equal|lesser|greater>
+	signal  videoflag	:STD_LOGIC;
+
+	SIGNAL	STATE		:STATES;
+	SIGNAL	REG 		:REGISTERS;
+--	SIGNAL	AUX			:STD_LOGIC_VECTOR;
+	
+BEGIN
+PROCESS  (clk, reset)
+		VARIABLE RX : INTEGER;
+		VARIABLE RY : INTEGER;
+		
+--		VARIABLE RES : INTEGER;
+		VARIABLE RES2 :STD_LOGIC_VECTOR(16 downto 0);
+BEGIN
+
+if (reset = '1') then 
+
+	REG(0)  <= x"0000";
+	REG(1)  <= x"0000";	
+	REG(2)  <= x"0000";
+	REG(3)  <= x"0000";
+	REG(4)  <= x"0000";
+	REG(5)  <= x"0000";
+	REG(6)  <= x"0000";
+	REG(7)  <= x"0000";
+	REG(8)  <= x"0000";
+	REG(9)  <= x"0000";
+	REG(10) <= x"0000";
+	REG(11) <= x"0000";
+	REG(12) <= x"0000";
+	REG(13) <= x"0000";
+	REG(14) <= x"0000";
+	REG(15) <= x"0000";
+
+	PC <= x"0000";
+	SP <= x"0000";
+	IR2 <= x"0000";
+	FL <= x"0000";
+--	MP <= x"0000";	
+	state <= fetch;
+	ramwrite <= '0';
+	videoflag <= '0';
+	display1 <= x"0";
+	display2 <= x"0";
+	RES2 := "00000000000000000";
+
+elsif (clk'event) and (clk = '1') then
+
+	CASE state IS
+        
+		WHEN fetch =>
+			romaddress(15 downto 0) <= PC(15 downto 0);
+			PC <= PC + '1';
+			ramwrite <= '0';
+			
+			state <= decode;
+			PONTO <= "01";
+			videoflag <= '0';			
+			
+			DISPLAY1 <= PC(3 DOWNTO 0); 
+			DISPLAY2 <= PC(7 DOWNTO 4);			
+					
+        WHEN decode =>
+
+			RX := conv_integer(IR1(9 DOWNTO 6));
+			RY := conv_integer(IR1(5 DOWNTO 2));
+
+			IF (IR1(15 DOWNTO 10) = LOADCTE) or  
+			   (IR1(15 DOWNTO 10) = JMP) OR   
+			   (IR1(15 DOWNTO 10) = CALL) THEN
+				ROMADDRESS <= PC;
+				PC <= PC + '1';
+			END IF;
+
+			IF ((IR1(15 DOWNTO 10) = STORE) OR (IR1(15 DOWNTO 10) = LOAD)) THEN
+				RAMaddress <= REG(RY); 
+			END IF;
+
+			if (IR1(15 DOWNTO 10) = RET) then
+				RAMaddress <= SP - '1';
+				SP <= SP - '1';
+			end if;
+			
+--			if (IR1(15 DOWNTO 10) = INC) then
+--				REG(RX) <= REG(RX) + '1';
+--			end if;	
+
+--			if (IR1(15 DOWNTO 10) = DEC) then
+--				REG(RX) <= REG(RX) - '1';
+--			end if;						
+
+--			if (IR1(15 DOWNTO 10) = MULT) then
+	--			REG(RX) <= REG(RX) * REG(RY);
+		--	end if;						
+			
+			if (IR1(15 DOWNTO 10) = MOV) then
+				REG(RX) <= REG(RY);
+			end if;	
+			
+			IF (IR1(15 DOWNTO 10) = ADD) THEN
+				REG(RX) <= REG(RX) + REG(RY);
+				RES2 := "00000000000000000" + REG(RX) + REG(RY);
+--				RES := conv_integer(REG(RX) + REG(RY));
+--				RES2 := CONV_STD_LOGIC_VECTOR(RES, 32);
+				if(RES2 > "01111111111111111") THEN -- Carry
+					FL(4) <= '1';
+--					FL(7) <= '1';
+				ELSE
+					FL(4) <= '0';
+--					FL(7) <= '0';
+				end if;
+				
+				if(RES2 = "00000000000000000") THEN
+					FL(3 downto 0) <= "1100";  -- FL = <...|zero|equal|lesser|greater>
+				ELSE
+					FL(3 downto 0) <= "0000";  -- FL = <...|zero|equal|lesser|greater>
+				end if;
+				
+			END IF;
+			
+			IF (IR1(15 DOWNTO 10) = SUB) THEN
+				REG(RX) <= REG(RX) - REG(RY);
+				RES2 := "00000000000000000" + REG(RX) - REG(RY);
+--				RES := conv_integer(REG(RX) - REG(RY));
+--				RES2 := CONV_STD_LOGIC_VECTOR(RES, 32);
+
+--				IF( (REG(RX)(15) = '1') AND (REG(RY)(15) = '0') ) THEN
+--					IF( RES2 > x"FFFF" ) THEN
+--						FL(8) <= '1';
+--						FL(4) <= '1';
+--					ELSE
+--						FL(8) <= '0';
+--						FL(4) <= '0';
+--					END IF;
+--				END IF;
+				
+--				IF( (REG(RX)(15) = '0') AND (REG(RY)(15) = '1') ) THEN
+--					IF( RES2 > x"FFFF" ) THEN
+--						FL(7) <= '1';
+--						FL(4) <= '1';
+--					ELSE
+--						FL(7) <= '0';
+--						FL(4) <= '0';
+--					END IF;
+--				END IF;
+				
+				if(RES2 = "00000000000000000") THEN
+					FL(3 downto 0) <= "1100";  -- FL = <...|zero|equal|lesser|greater>
+				ELSE
+					FL(3 downto 0) <= "0000";  -- FL = <...|zero|equal|lesser|greater>
+				end if;
+			END IF;
+			
+			IF (IR1(15 DOWNTO 10) = SHIFT) THEN
+				IF (IR1(2) = '1') THEN 	-- Rotate
+					IF (IR1(1) = '1') THEN	-- Left
+						REG(RX)(15 DOWNTO 1) <= REG(RX)(14 DOWNTO 0);
+						REG(RX)(0) <= REG(RX)(15);
+					ELSE					-- Right
+						REG(RX)(14 DOWNTO 0) <= REG(RX)(15 DOWNTO 1);
+						REG(RX)(15) <= REG(RX)(0);
+					END IF;
+				ELSE					-- Shift
+					IF (IR1(1) = '1') THEN	-- Left
+						REG(RX)(15 DOWNTO 1) <= REG(RX)(14 DOWNTO 0);
+						REG(RX)(0) <= IR1(0);
+					ELSE					-- Right
+						REG(RX)(14 DOWNTO 0) <= REG(RX)(15 DOWNTO 1);
+						REG(RX)(15) <= IR1(0);
+					END IF;
+				END IF;
+			END IF;
+			
+			--IF ((IR1(15 DOWNTO 14) = "10") or (IR1(15 DOWNTO 14) = "01")) THEN  -- Logic or Aritmethic operations
+			IF( IR1(15 DOWNTO 10) = COMP) THEN
+				IF (REG(RX) > REG(RY)) THEN
+					FL(2 downto 0) <= "001"; -- FL = <...|zero|equal|lesser|greater>
+				END IF;
+				IF (REG(RX) < REG(RY)) THEN
+					FL(2 downto 0) <= "010"; -- FL = <...|zero|equal|lesser|greater>
+				END IF;
+				IF (REG(RX) = REG(RY)) THEN
+					FL(2 downto 0) <= "100"; -- FL = <...|zero|equal|lesser|greater>
+				END IF;
+			END IF;
+
+			IF( IR1(15 DOWNTO 10) = HALT) THEN
+				PC <= PC - 1;
+			END IF;
+
+			IF(IR1(15 DOWNTO 10) = OUTCHAR) THEN
+				video(15 DOWNTO 8) <= REG(RX)(7 DOWNTO 0);
+				video(7 DOWNTO 0)  <= REG(RY)(7 DOWNTO 0);
+				videoflag <= '1'; -- Flag to set write signal to Video Memory
+			else
+				videoflag <= '0';
+			END IF;
+
+			IF(IR1(15 DOWNTO 10) = INCHAR) THEN
+
+				REG(RX)(7 DOWNTO 0) <= key(7 DOWNTO 0); -- Rx get last Key Pressed
+				REG(RX)(15 DOWNTO 8) <= "00000000"; -- Rx get last Key Pressed
+			
+			END IF;
+			
+			if (IR1(15 DOWNTO 10) = LAND) THEN
+				REG(RX) <= REG(RX) and REG(RY);
+				if(REG(RX) = x"0000") then
+					FL(3 downto 0) <= "1100"; -- FL = <...|zero|equal|lesser|greater>
+				else
+					FL(3 downto 0) <= "0000"; -- FL = <...|zero|equal|lesser|greater>					
+				end if;
+			end if;
+			
+			if (IR1(15 DOWNTO 10) = LOR) THEN
+				REG(RX) <= REG(RX) or REG(RY);
+				if(REG(RX) = x"0000") then
+					FL(3 downto 0) <= "1100"; -- FL = <...|zero|equal|lesser|greater>
+				else
+					FL(3 downto 0) <= "0000"; -- FL = <...|zero|equal|lesser|greater>					
+				end if;
+			end if;
+			
+			if (IR1(15 DOWNTO 10) = LXOR) THEN
+				REG(RX) <= REG(RX) xor REG(RY);
+				if(REG(RX) = x"0000") then
+					FL(3 downto 0) <= "1100"; -- FL = <...|zero|equal|lesser|greater>
+				else
+					FL(3 downto 0) <= "0000"; -- FL = <...|zero|equal|lesser|greater>					
+				end if;
+			end if;
+
+			IR2 <= IR1;
+			ramwrite <= '0';
+			state <= exec;
+			PONTO <= "10";	
+
+			DISPLAY1 <= PC(3 DOWNTO 0); 
+			DISPLAY2 <= PC(7 DOWNTO 4);			
+					
+        WHEN exec =>
+			RX := conv_integer(IR2(9 DOWNTO 6));
+			RY := conv_integer(IR2(5 DOWNTO 2));
+
+			if IR2(15 DOWNTO 10) = LOAD then		-- Last part of LOAD
+				REG(RX) <= RAMin;
+			end if;
+
+--			IF (IR2(15 DOWNTO 10) = LOAD) THEN
+--				RAMaddress <= IR1; -- IR1 agora é o ponteiro para o operando na memória de dados
+--			END IF;
+
+			if (IR2(15 DOWNTO 10) = LOADCTE) THEN
+				REG(RX) <= IR1;				
+			END IF;
+
+			IF (IR2(15 DOWNTO 10) = STORE) THEN
+				RAMout <= REG(RX);
+			END IF;
+			
+			if (IR2(15 DOWNTO 10) = CALL) then
+				RAMaddress <= SP;
+				SP <= SP + '1';
+				RAMout <= PC;
+				PC <= IR1;
+			end if;
+			
+			-- control ram write
+			if (IR2(15 DOWNTO 10) = CALL) OR (IR2(15 DOWNTO 10) = STORE) then
+				ramwrite <= '1';
+			else
+				ramwrite <= '0';
+			end if;
+
+			if (IR2(15 DOWNTO 10) = RET) then
+				PC <= RAMin;
+			end if;
+
+			IF (IR2(15 DOWNTO 10) = JMP) THEN
+				IF (IR2(1 DOWNTO 0) = "00") THEN
+					PC <= IR1;
+				ELSIF (IR2(1 DOWNTO 0) = "01") THEN -- equal
+					IF (FL(2 DOWNTO 0) = "100") THEN
+						PC <= IR1;
+					END IF;
+				ELSIF (IR2(1 DOWNTO 0) = "10") THEN -- greater
+					IF (FL(2 DOWNTO 0) = "001") THEN
+						PC <= IR1;
+					END IF;
+				ELSIF (IR2(1 DOWNTO 0) = "11") THEN -- lesser
+					IF (FL(2 DOWNTO 0) = "010") THEN
+						PC <= IR1;
+					END IF;
+				END IF;
+			END IF;
+
+			PONTO <= "11";
+			state <= fetch;
+			videoflag <= '0';
+
+			DISPLAY1 <= PC(3 DOWNTO 0); 
+			DISPLAY2 <= PC(7 DOWNTO 4);			
+			
+	   WHEN OTHERS =>
+--            display1 <= "1111";
+--            display2 <= "1111";
+			state <= fetch;
+			videoflag <= '0';
+	END CASE;
+end if;
+
+END PROCESS;
+
+PROCESS (videoflag, video_set)
+BEGIN
+  IF video_set = '1' THEN video_ready <= '0';
+  ELSIF videoflag'EVENT and videoflag = '1' THEN
+	video_ready <= '1';
+  END IF;
+END PROCESS;
+
+END a;

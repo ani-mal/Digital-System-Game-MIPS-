@@ -1,0 +1,16 @@
+Fitter Status : Successful - Fri Nov 29 17:39:17 2013
+Quartus II 64-Bit Version : 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition
+Revision Name : ap7
+Top-level Entity Name : ap7
+Family : Cyclone II
+Device : EP2C70F896C6
+Timing Models : Final
+Total logic elements : 886 / 68,416 ( 1 % )
+    Total combinational functions : 855 / 68,416 ( 1 % )
+    Dedicated logic registers : 228 / 68,416 ( < 1 % )
+Total registers : 228
+Total pins : 38 / 622 ( 6 % )
+Total virtual pins : 0
+Total memory bits : 8,192 / 1,152,000 ( < 1 % )
+Embedded Multiplier 9-bit elements : 0 / 300 ( 0 % )
+Total PLLs : 0 / 4 ( 0 % )

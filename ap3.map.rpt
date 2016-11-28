@@ -1,0 +1,291 @@
+Analysis & Synthesis report for ap3
+Wed May 25 14:57:50 2005
+Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Hierarchy
+  5. Analysis & Synthesis Resource Utilization by Entity
+  6. Analysis & Synthesis Equations
+  7. Analysis & Synthesis Source Files Read
+  8. Analysis & Synthesis Resource Usage Summary
+  9. WYSIWYG Cells
+ 10. General Register Statistics
+ 11. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2005 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+
+
+
++-----------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                ;
++-----------------------------+-----------------------------------------------+
+; Analysis & Synthesis Status ; Successful - Wed May 25 14:57:50 2005         ;
+; Quartus II Version          ; 4.2 Build 178 01/19/2005 SP 1 SJ Full Version ;
+; Revision Name               ; ap3                                           ;
+; Top-level Entity Name       ; ap3                                           ;
+; Family                      ; FLEX10K                                       ;
+; Total logic elements        ; 210                                           ;
+; Total pins                  ; 21                                            ;
+; Total memory bits           ; 0                                             ;
++-----------------------------+-----------------------------------------------+
+
+
++----------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                          ;
++------------------------------------------------------+-----------------+---------------+
+; Option                                               ; Setting         ; Default Value ;
++------------------------------------------------------+-----------------+---------------+
+; Device                                               ; EPF10K70RC240-4 ;               ;
+; Family name                                          ; FLEX10K         ; Stratix       ;
+; Use smart compilation                                ; Normal          ; Normal        ;
+; Create Debugging Nodes for IP Cores                  ; off             ; off           ;
+; Preserve fewer node names                            ; On              ; On            ;
+; Disable OpenCore Plus hardware evaluation            ; Off             ; Off           ;
+; Verilog Version                                      ; Verilog_2001    ; Verilog_2001  ;
+; VHDL Version                                         ; VHDL93          ; VHDL93        ;
+; Top-level entity name                                ; ap3             ; ap3           ;
+; State Machine Processing                             ; Auto            ; Auto          ;
+; Extract Verilog State Machines                       ; On              ; On            ;
+; Extract VHDL State Machines                          ; On              ; On            ;
+; NOT Gate Push-Back                                   ; On              ; On            ;
+; Power-Up Don't Care                                  ; On              ; On            ;
+; Remove Redundant Logic Cells                         ; Off             ; Off           ;
+; Remove Duplicate Registers                           ; On              ; On            ;
+; Ignore CARRY Buffers                                 ; Off             ; Off           ;
+; Ignore CASCADE Buffers                               ; Off             ; Off           ;
+; Ignore GLOBAL Buffers                                ; Off             ; Off           ;
+; Ignore ROW GLOBAL Buffers                            ; Off             ; Off           ;
+; Ignore LCELL Buffers                                 ; Off             ; Off           ;
+; Ignore SOFT Buffers                                  ; On              ; On            ;
+; Limit AHDL Integers to 32 Bits                       ; Off             ; Off           ;
+; Auto Implement in ROM                                ; Off             ; Off           ;
+; Optimization Technique -- FLEX 10K/10KE/10KA/ACEX 1K ; Area            ; Area          ;
+; Carry Chain Length -- FLEX 10K                       ; 32              ; 32            ;
+; Cascade Chain Length                                 ; 2               ; 2             ;
+; Auto Carry Chains                                    ; On              ; On            ;
+; Auto Open-Drain Pins                                 ; On              ; On            ;
+; Remove Duplicate Logic                               ; On              ; On            ;
+; Auto ROM Replacement                                 ; On              ; On            ;
+; Auto RAM Replacement                                 ; On              ; On            ;
+; Auto Clock Enable Replacement                        ; On              ; On            ;
+; Auto Resource Sharing                                ; Off             ; Off           ;
+; Allow Any RAM Size For Recognition                   ; Off             ; Off           ;
+; Allow Any ROM Size For Recognition                   ; Off             ; Off           ;
++------------------------------------------------------+-----------------+---------------+
+
+
++-----------+
+; Hierarchy ;
++-----------+
+ap3
+ |-- dec_7seg:29
+ |-- dec_7seg:30
+ |-- keyboard:inst
+ |-- debounce:inst1
+ |-- clk_div:inst2
+      |-- lpm_counter:count_1Mhz_rtl_0
+           |-- alt_counter_f10ke:wysi_counter
+ |-- debounce:inst3
+ |-- lpm_dff0:inst10
+      |-- lpm_ff:lpm_ff_component
+ |-- dec_kb:inst11
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                  ;
++-------------------------------------------+-------------+--------------+-------------+------+--------------+-------------------+------------------+-----------------+--------------------------------------------------------------------------------+
+; Compilation Hierarchy Node                ; Logic Cells ; LC Registers ; Memory Bits ; Pins ; LUT-Only LCs ; Register-Only LCs ; LUT/Register LCs ; Carry Chain LCs ; Full Hierarchy Name                                                            ;
++-------------------------------------------+-------------+--------------+-------------+------+--------------+-------------------+------------------+-----------------+--------------------------------------------------------------------------------+
+; |ap3                                      ; 210 (2)     ; 94           ; 0           ; 21   ; 116 (0)      ; 69 (2)            ; 25 (0)           ; 5 (0)           ; |ap3                                                                           ;
+;    |clk_div:inst2|                        ; 28 (23)     ; 23           ; 0           ; 0    ; 5 (5)        ; 5 (5)             ; 18 (13)          ; 5 (0)           ; |ap3|clk_div:inst2                                                             ;
+;       |lpm_counter:count_1Mhz_rtl_0|      ; 5 (0)       ; 5            ; 0           ; 0    ; 0 (0)        ; 0 (0)             ; 5 (0)            ; 5 (0)           ; |ap3|clk_div:inst2|lpm_counter:count_1Mhz_rtl_0                                ;
+;          |alt_counter_f10ke:wysi_counter| ; 5 (5)       ; 5            ; 0           ; 0    ; 0 (0)        ; 0 (0)             ; 5 (5)            ; 5 (5)           ; |ap3|clk_div:inst2|lpm_counter:count_1Mhz_rtl_0|alt_counter_f10ke:wysi_counter ;
+;    |debounce:inst1|                       ; 5 (5)       ; 5            ; 0           ; 0    ; 0 (0)        ; 4 (4)             ; 1 (1)            ; 0 (0)           ; |ap3|debounce:inst1                                                            ;
+;    |dec_7seg:29|                          ; 7 (7)       ; 0            ; 0           ; 0    ; 7 (7)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |ap3|dec_7seg:29                                                               ;
+;    |dec_7seg:30|                          ; 6 (6)       ; 0            ; 0           ; 0    ; 6 (6)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |ap3|dec_7seg:30                                                               ;
+;    |dec_kb:inst11|                        ; 120 (120)   ; 32           ; 0           ; 0    ; 88 (88)      ; 32 (32)           ; 0 (0)            ; 0 (0)           ; |ap3|dec_kb:inst11                                                             ;
+;    |keyboard:inst|                        ; 34 (34)     ; 24           ; 0           ; 0    ; 10 (10)      ; 18 (18)           ; 6 (6)            ; 0 (0)           ; |ap3|keyboard:inst                                                             ;
+;    |lpm_dff0:inst10|                      ; 8 (0)       ; 8            ; 0           ; 0    ; 0 (0)        ; 8 (0)             ; 0 (0)            ; 0 (0)           ; |ap3|lpm_dff0:inst10                                                           ;
+;       |lpm_ff:lpm_ff_component|           ; 8 (8)       ; 8            ; 0           ; 0    ; 0 (0)        ; 8 (8)             ; 0 (0)            ; 0 (0)           ; |ap3|lpm_dff0:inst10|lpm_ff:lpm_ff_component                                   ;
++-------------------------------------------+-------------+--------------+-------------+------+--------------+-------------------+------------------+-----------------+--------------------------------------------------------------------------------+
+
+
++--------------------------------+
+; Analysis & Synthesis Equations ;
++--------------------------------+
+The equations can be found in C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/ap3.map.eqn.
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                    ;
++----------------------------------+-----------------+----------------------------------------------------------------------+
+; File Name with User-Entered Path ; Used in Netlist ; File Name with Absolute Path                                         ;
++----------------------------------+-----------------+----------------------------------------------------------------------+
+; ap3.bdf                          ; yes             ; C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/ap3.bdf      ;
+; debounce.vhd                     ; yes             ; C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/debounce.vhd ;
+; dec_7seg.vhd                     ; yes             ; C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/dec_7seg.vhd ;
+; dec_kb.vhd                       ; yes             ; C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/dec_kb.vhd   ;
+; keyboard.vhd                     ; yes             ; C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/keyboard.vhd ;
+; clk_div.vhd                      ; yes             ; C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/clk_div.vhd  ;
+; lpm_dff0.vhd                     ; yes             ; C:/Documents and Settings/fmanzi/Desktop/simoes/teclado/lpm_dff0.vhd ;
+; lpm_ff.tdf                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_ff.tdf               ;
+; lpm_constant.inc                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_constant.inc         ;
+; aglobal42.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/aglobal42.inc            ;
+; lpm_counter.tdf                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.tdf          ;
+; lpm_decode.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_decode.inc           ;
+; lpm_add_sub.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_add_sub.inc          ;
+; cmpconst.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/cmpconst.inc             ;
+; lpm_compare.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_compare.inc          ;
+; lpm_counter.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.inc          ;
+; dffeea.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/dffeea.inc               ;
+; alt_synch_counter.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter.inc    ;
+; alt_synch_counter_f.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter_f.inc  ;
+; alt_counter_f10ke.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_f10ke.inc    ;
+; alt_counter_stratix.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_stratix.inc  ;
+; alt_counter_f10ke.tdf            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_f10ke.tdf    ;
+; flex10ke_lcell.inc               ; yes             ; c:/altera/quartus42/libraries/megafunctions/flex10ke_lcell.inc       ;
++----------------------------------+-----------------+----------------------------------------------------------------------+
+
+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++-----------------------------------+--------------------------+
+; Resource                          ; Usage                    ;
++-----------------------------------+--------------------------+
+; Logic cells                       ; 210                      ;
+; Total combinational functions     ; 141                      ;
+; Total 4-input functions           ; 90                       ;
+; Total 3-input functions           ; 28                       ;
+; Total 2-input functions           ; 16                       ;
+; Total 1-input functions           ; 6                        ;
+; Total 0-input functions           ; 1                        ;
+; Combinational cells for routing   ; 0                        ;
+; Total registers                   ; 94                       ;
+; Total logic cells in carry chains ; 5                        ;
+; I/O pins                          ; 21                       ;
+; Maximum fan-out node              ; keyboard:inst|scan_ready ;
+; Maximum fan-out                   ; 42                       ;
+; Total fan-out                     ; 693                      ;
+; Average fan-out                   ; 3.00                     ;
++-----------------------------------+--------------------------+
+
+
++----------------------------------------------------------------+
+; WYSIWYG Cells                                                  ;
++--------------------------------------------------------+-------+
+; Statistic                                              ; Value ;
++--------------------------------------------------------+-------+
+; Number of WYSIWYG cells                                ; 5     ;
+; Number of synthesis-generated cells                    ; 205   ;
+; Number of WYSIWYG LUTs                                 ; 5     ;
+; Number of synthesis-generated LUTs                     ; 136   ;
+; Number of WYSIWYG registers                            ; 5     ;
+; Number of synthesis-generated registers                ; 89    ;
+; Number of cells with combinational logic only          ; 116   ;
+; Number of cells with registers only                    ; 69    ;
+; Number of cells with combinational logic and registers ; 25    ;
++--------------------------------------------------------+-------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 94    ;
+; Number of registers using Synchronous Clear  ; 5     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 1     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 22    ;
+; Number of registers using Output Enable      ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Analysis & Synthesis
+    Info: Version 4.2 Build 178 01/19/2005 Service Pack 1 SJ Full Version
+    Info: Processing started: Wed May 25 14:57:44 2005
+Info: Command: quartus_map --import_settings_files=on --export_settings_files=off ap3 -c ap3
+Info: Found 1 design units, including 1 entities, in source file ap3.bdf
+    Info: Found entity 1: ap3
+Info: Found 2 design units, including 1 entities, in source file debounce.vhd
+    Info: Found design unit 1: debounce-a
+    Info: Found entity 1: debounce
+Info: Found 2 design units, including 1 entities, in source file dec_7seg.vhd
+    Info: Found design unit 1: dec_7seg-a
+    Info: Found entity 1: dec_7seg
+Info: Found 2 design units, including 1 entities, in source file dec_kb.vhd
+    Info: Found design unit 1: dec_kb-a
+    Info: Found entity 1: dec_kb
+Warning: Block or symbol "DEC_7SEG" of instance "30" overlaps another block or symbol
+Info: VHDL Case Statement information at dec_7seg.vhd(51): OTHERS choice is never selected
+Warning: VHDL Process Statement warning at dec_kb.vhd(36): signal "hex_digit_2" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Warning: VHDL Process Statement warning at dec_kb.vhd(37): signal "hex_digit_3" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Warning: VHDL Process Statement warning at dec_kb.vhd(39): signal "hex_digit_2" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Warning: VHDL Process Statement warning at dec_kb.vhd(46): signal "hex_digit_3" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Warning: VHDL Process Statement warning at dec_kb.vhd(46): signal "hex_digit_2" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Warning: VHDL Process Statement warning at dec_kb.vhd(47): signal "hex_digit_4" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Info: Using design file keyboard.vhd, which is not specified as a design file for the current project, but contains definitions for 2 design units and 1 entities in project
+    Info: Found design unit 1: keyboard-a
+    Info: Found entity 1: keyboard
+Info: Using design file clk_div.vhd, which is not specified as a design file for the current project, but contains definitions for 2 design units and 1 entities in project
+    Info: Found design unit 1: clk_div-a
+    Info: Found entity 1: clk_div
+Info: Using design file lpm_dff0.vhd, which is not specified as a design file for the current project, but contains definitions for 2 design units and 1 entities in project
+    Info: Found design unit 1: lpm_dff0-SYN
+    Info: Found entity 1: lpm_dff0
+Info: Found 1 design units, including 1 entities, in source file ../../../../../altera/quartus42/libraries/megafunctions/lpm_ff.tdf
+    Info: Found entity 1: lpm_ff
+Info: Inferred 1 megafunctions from design logic
+    Info: Inferred lpm_counter megafunction (LPM_WIDTH=5) from the following logic: "clk_div:inst2|count_1Mhz[0]~5"
+Info: Found 1 design units, including 1 entities, in source file ../../../../../altera/quartus42/libraries/megafunctions/lpm_counter.tdf
+    Info: Found entity 1: lpm_counter
+Info: Found 1 design units, including 1 entities, in source file ../../../../../altera/quartus42/libraries/megafunctions/alt_counter_f10ke.tdf
+    Info: Found entity 1: alt_counter_f10ke
+Info: Duplicate registers merged to single register
+    Info: Duplicate register "inst7" merged to single register "inst4"
+Warning: Design contains 1 input pin(s) that do not drive logic
+    Warning: No output dependent on input pin "PB[2]"
+Info: Implemented 231 device resources after synthesis - the final resource count might be different
+    Info: Implemented 5 input pins
+    Info: Implemented 16 output pins
+    Info: Implemented 210 logic cells
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 9 warnings
+    Info: Processing ended: Wed May 25 14:57:50 2005
+    Info: Elapsed time: 00:00:06
+
+
